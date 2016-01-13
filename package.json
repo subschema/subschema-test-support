@@ -5,7 +5,8 @@
   "main": "lib/sample-loader.js",
   "webpack":"lib/index.js",
   "scripts": {
-    "compile": "babel src -s --out-dir lib"
+    "compile": "babel src -s --out-dir lib",
+    "prepublish":"compile"
   },
   "author": "<Justin Spears>speajus@gmail.com",
   "license": "ISC",
