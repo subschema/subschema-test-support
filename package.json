@@ -1,6 +1,6 @@
 {
   "name": "subschema-test-support",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Subschema test support",
   "loader": "lib/sample-loader.js",
   "main": "lib/index.js",
