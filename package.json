@@ -1,0 +1,21 @@
+{
+  "name": "subschema-test-support",
+  "version": "1.0.0",
+  "description": "Subschema test support",
+  "main": "lib/sample-loader.js",
+  "webpack":"lib/index.js",
+  "scripts": {
+    "compile": "babel src -s --out-dir lib"
+  },
+  "author": "<Justin Spears>speajus@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.4.0",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13"
+  },
+  "dependencies": {
+    "expect": "^1.13.4",
+    "react-addons-test-utils": "^0.14.6"
+  }
+}
