@@ -213,5 +213,6 @@ export {
     change,
     check,
     blur,
-    focus
+    focus,
+    sample
 }
