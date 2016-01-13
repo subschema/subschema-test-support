@@ -13,8 +13,8 @@ function prettyLog(result) {
 function into(node, debug) {
     if (debug === true) {
         debug = document.createElement('div');
-        document.body.appendChild(debug)
-        ReactDOM.render(node, debug);
+        document.body.appendChild(debug);
+        return ReactDOM.render(node, debug);
     }
     return TestUtils.renderIntoDocument(node);
 }
@@ -213,6 +213,5 @@ export {
     change,
     check,
     blur,
-    focus,
-    sample
+    focus
 }
