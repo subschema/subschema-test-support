@@ -1,7 +1,7 @@
-var {types, decorators} = Subschema;
-var {provide} = decorators;
-var {type, template} = provide;
-var {Select, Checkbox} = types;
+const {types, decorators} = Subschema;
+const {provide} = decorators;
+const {type, template} = provide;
+const {Select, Checkbox} = types;
 //Provide a template named SimpleTempalte
 
 @template
@@ -53,8 +53,8 @@ class Address {
             type: 'Text',
             dataType: 'number'
         }
-    }
-    fields = ['address', 'city', 'state', 'zipCode']
+    };
+    fields = ['address', 'city', 'state', 'zipCode'];
 }
 //Adding a schema manually, this can also be done for types, templates,validators, etc...
 loader.addSchema({
