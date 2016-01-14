@@ -15,6 +15,7 @@ module.exports = {
     },
     module: {
         extensions: ['', '.js', '.jsx'],
+
         loaders: [
             {
                 test: /.*-setup.jsx?$/,
@@ -22,6 +23,10 @@ module.exports = {
                 include: [
                     join('samples')
                 ]
+            },
+            {
+                test: /(?!.*-setup\.jsx?$)\.jsx?$/,
+                loader: 'babel'
             }
         ]
     }

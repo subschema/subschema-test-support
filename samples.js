@@ -54,6 +54,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
 	///(?!.*(index).js$).*\.js(x)
 	var ctx = __webpack_require__(1);
 	var rctx = __webpack_require__(30);
@@ -64,11 +66,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    var setup = obj[key.replace(/\.jsx?$/, '').replace(/.*\//, '')] = ctx(key);
 	    if (setup.setupFile) {
-	     var txt =   setup.setupTxt = rctx('./'+setup.setupFile);
+	        var txt = setup.setupTxt = rctx('./' + setup.setupFile);
 	    }
 	    return obj;
 	}, {});
-
 
 /***/ },
 /* 1 */
@@ -116,11 +117,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 3 */
 /***/ function(module, exports) {
 
+	'use strict';
+
 	module.exports = {
-	    description: `Autocomplete adds static or dynamic autocompletion.
-	     If options are passed than it behaves mostly like the select component.
-	     If a processor is passed than it can load dynamically.
-	     `,
+	    description: 'Autocomplete adds static or dynamic autocompletion.\n     If options are passed than it behaves mostly like the select component.\n     If a processor is passed than it can load dynamically.\n     ',
 	    schema: {
 	        schema: {
 	            'simple': {
@@ -140,7 +140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            label: 'a 1'
 	        }
 	    },
-	    setup: function (context, props) {
+	    setup: function setup(context, props) {
 	        props.loader = 'Subschema.loaderFactory([Subschema.DefaultLoader])';
 	    },
 	    setupFile: 'Autocomplete-setup.js'
@@ -150,28 +150,29 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ function(module, exports) {
 
+	"use strict";
+
 	module.exports = {
 	    description: 'Super basic form, with select and a requied name',
 	    schema: {
 	        "schema": {
-	            "title": {"type": "Select", "options": ["Mr", "Mrs", "Ms"]},
-	            "name": {type: "Text", validators: ['required']},
-	            "age": {type: 'Number'}
+	            "title": { "type": "Select", "options": ["Mr", "Mrs", "Ms"] },
+	            "name": { type: "Text", validators: ['required'] },
+	            "age": { type: 'Number' }
 
 	        },
-	        "fieldsets": [
-	            {
-	                "legend": "Name",
-	                "fields": "title, name, age",
-	                buttons: [{
-	                    label: 'Cancel',
-	                    action: 'cancel',
-	                    buttonClass: 'btn'
-	                }, {
-	                    label: 'Submit', action: 'submit',
-	                    buttonClass: 'btn btn-primary'
-	                }]
+	        "fieldsets": [{
+	            "legend": "Name",
+	            "fields": "title, name, age",
+	            buttons: [{
+	                label: 'Cancel',
+	                action: 'cancel',
+	                buttonClass: 'btn'
+	            }, {
+	                label: 'Submit', action: 'submit',
+	                buttonClass: 'btn btn-primary'
 	            }]
+	        }]
 	    },
 	    data: {
 	        title: 'Mrs',
@@ -184,7 +185,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	};
-
 
 /***/ },
 /* 5 */,
@@ -214,18 +214,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	        },
-	        fieldsets: [{legend: 'Make And Model Linked Selects', fields: ['make', 'model']}]
+	        fieldsets: [{ legend: 'Make And Model Linked Selects', fields: ['make', 'model'] }]
 	    },
 	    data: {
 	        make: 'audi',
 	        model: '4000'
 	    },
 	    setupFile: 'CarMake-setup.js'
-	}
+	};
 
 /***/ },
 /* 7 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'The most usable of UI components the lowly checkbox.   This shows single value, groups of checkboxes and a true/false',
@@ -236,7 +238,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                type: 'Checkboxes'
 	            },
 	            group2: {
-	                options: [{val: 'one'}, {val: 'two', labelHTML: '<h2>awesome</h2>'}],
+	                options: [{ val: 'one' }, { val: 'two', labelHTML: '<h2>awesome</h2>' }],
 	                type: 'Checkboxes'
 	            },
 	            trueFalse: {
@@ -245,21 +247,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            },
 	            groupsOfGroups: {
 	                title: 'Group of Groups',
-	                options: [
-	                    {
-	                        group: 'North America', options: [
-	                        {val: 'ca', label: 'Canada'},
-	                        {val: 'us', label: 'United States'}
-	                    ]
-	                    },
-	                    {
-	                        group: 'Europe', options: [
-	                        {val: 'es', label: 'Spain'},
-	                        {val: 'fr', label: 'France'},
-	                        {val: 'uk', label: 'United Kingdom'}
-	                    ]
-	                    }
-	                ],
+	                options: [{
+	                    group: 'North America', options: [{ val: 'ca', label: 'Canada' }, { val: 'us', label: 'United States' }]
+	                }, {
+	                    group: 'Europe', options: [{ val: 'es', label: 'Spain' }, { val: 'fr', label: 'France' }, { val: 'uk', label: 'United Kingdom' }]
+	                }],
 	                type: 'Checkboxes'
 	            }
 	        }
@@ -268,21 +260,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        trueFalse: true,
 	        group1: ['two'],
 	        group2: ['one'],
-	        groupsOfGroups: [
-	            'us',
-	            'uk'
-	        ]
+	        groupsOfGroups: ['us', 'uk']
 	    },
 	    errors: {
-	        groupsOfGroups: [{message: 'Even a checkbox can go wrong'}]
+	        groupsOfGroups: [{ message: 'Even a checkbox can go wrong' }]
 	    }
 
-
-	}
+	};
 
 /***/ },
 /* 8 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: 'Shows how you could use a conditional to show hide, based on error or toggle value.  Click data and error in the menu see it in action',
@@ -301,7 +291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            "showAddress": {
 	                "type": "Checkbox",
 	                "title": "Show Address",
-	                "help":"Click this to toggle the address"
+	                "help": "Click this to toggle the address"
 
 	            },
 	            "address": {
@@ -309,12 +299,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                title: false,
 	                conditional: {
 	                    listen: "showAddress",
-	                    operator: "truthy"/*,
-	                    error: 'address'*/
+	                    operator: "truthy" /*,
+	                                       error: 'address'*/
 	                },
 	                fields: "street, city, state, zip",
 	                subSchema: {
-	                    street: {type: 'Text', validators: ['required']},
+	                    street: { type: 'Text', validators: ['required'] },
 	                    city: 'Text',
 	                    state: {
 	                        options: ['CA', 'NV', 'DE'],
@@ -322,7 +312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    },
 	                    zip: {
 	                        type: 'Text',
-	                        validators: ['required', {type:'regexp', regexp:'/^[0-9]{5}(-([0-9]{4}))?$/'}]
+	                        validators: ['required', { type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/' }]
 	                    }
 	                }
 	            }
@@ -330,12 +320,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "fieldsets": [{
 	            "legend": "Name",
 	            "fields": ["title", "name", "email", "showAddress", "address"],
-	            buttons: [
-	                {
-	                    label: "Submit",
-	                    className: 'btn btn-primary pull-right'
-	                }
-	            ]
+	            buttons: [{
+	                label: "Submit",
+	                className: 'btn btn-primary pull-right'
+	            }]
 	        }]
 	    },
 	    data: {
@@ -357,33 +345,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-
 /***/ },
 /* 9 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: 'Super basic form, with select and a requied name that shows content',
 	    schema: {
 	        "schema": {
-	            "title": {"type": "Select", "options": ["Mr", "Mrs", "Ms"]},
-	            "name": {type: "Text", validators: ['required']},
-	            "age":{type:'Text', dataType:'number'},
-	            'content':{
+	            "title": { "type": "Select", "options": ["Mr", "Mrs", "Ms"] },
+	            "name": { type: "Text", validators: ['required'] },
+	            "age": { type: 'Text', dataType: 'number' },
+	            'content': {
 
-	                type:"Content",
-	                title:false,
-	                className:'col-sm-offset-2',
-	                content:'{title} {..name} is {age}'
+	                type: "Content",
+	                title: false,
+	                className: 'col-sm-offset-2',
+	                content: '{title} {..name} is {age}'
 	            }
 
 	        },
-	        "fieldsets": [{"legend": "Name", "fields": ["title", "name","age", "content"]}]
+	        "fieldsets": [{ "legend": "Name", "fields": ["title", "name", "age", "content"] }]
 	    },
 	    data: {
 	        title: 'Mrs',
 	        name: 'Johnson',
-	        age:33
+	        age: 33
 	    },
 	    errors: {
 	        name: [{
@@ -393,11 +382,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	};
 
-
 /***/ },
 /* 10 */,
 /* 11 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    name: 'Custom Type',
@@ -410,22 +400,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                "offText": "Off",
 	                "title": "Are you sure?"
 	            }
-	        },
+	        }
 	    },
-	    props:{
-	        loader:true
+	    props: {
+	        loader: true
 	    },
 	    data: {
 	        areYouSure: true
 	    },
 	    setupFile: 'CustomType-setup.js'
-	}
-
+	};
 
 /***/ },
 /* 12 */,
 /* 13 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'Shows how you can use Expressions on Custom Types',
@@ -454,12 +445,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "loader": true
 	    },
 	    setupFile: 'Expression-setup.js'
-	}
-
+	};
 
 /***/ },
 /* 14 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'Sometimes you do not want to show your data.  Hidden type to the rescue.\
@@ -473,7 +465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	        },
-	        fieldsets: {legend: 'Magical Hidden Field', fields: ['hideme']}
+	        fieldsets: { legend: 'Magical Hidden Field', fields: ['hideme'] }
 	    },
 	    data: {
 	        hideme: {
@@ -486,13 +478,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    errors: {}
 
-
-	}
+	};
 
 /***/ },
 /* 15 */,
 /* 16 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: "All the components with no options passed, just a place to make sure everything is here.   This may not be a good idea.",
@@ -506,6 +499,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 17 */,
 /* 18 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'Shows how you can use Listeners on Custom Types',
@@ -537,26 +532,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        loader: true
 	    },
 	    data: {
-	        myDefault:'got',
-	        favorites: [
-	            {
-	                label: 'Game of Thrones',
-	                val: 'got'
-	            },
-	            {
-	                label: 'Casual',
-	                val: 'casual'
-	            }
-	        ]
+	        myDefault: 'got',
+	        favorites: [{
+	            label: 'Game of Thrones',
+	            val: 'got'
+	        }, {
+	            label: 'Casual',
+	            val: 'casual'
+	        }]
 	    },
 	    setupFile: 'ListenerProperty-setup.js'
-	}
-
+	};
 
 /***/ },
 /* 19 */,
 /* 20 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'This shows how to use a loader to load a schema.\
@@ -571,32 +564,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	            city: 'San Jose',
 	            state: 'CA'
 	        },
-	        otherAddresses: [
-	            {
-	                address: '456 2nd St',
-	                city: 'Chicago',
-	                state: 'IL'
-	            },
-	            {
-	                address: '3232 Fillmore St',
-	                city: 'Arlington',
-	                state: 'VA'
-	            }
-	        ]
+	        otherAddresses: [{
+	            address: '456 2nd St',
+	            city: 'Chicago',
+	            state: 'IL'
+	        }, {
+	            address: '3232 Fillmore St',
+	            city: 'Arlington',
+	            state: 'VA'
+	        }]
 	    },
 	    errors: {
-	        'primary.address': [{message: 'No Such Place'}]
+	        'primary.address': [{ message: 'No Such Place' }]
 	    },
 	    props: {
 	        loader: true,
 	        schema: 'Contact'
 	    },
 	    setupFile: 'Loader-setup.js'
-	}
+	};
 
 /***/ },
 /* 21 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'This is a very basic login form. But it shows both email validation and multi field validation.\n It also shows nested fieldsets',
@@ -614,13 +606,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            },
 	            confirmPassword: {
 	                type: 'Password',
-	                validators: [{type: 'match', field: 'password', message: 'Passwords do not match'}]
+	                validators: [{ type: 'match', field: 'password', message: 'Passwords do not match' }]
 	            }
 	        },
 	        fieldsets: [{
 	            legend: 'Login',
 	            fields: ['username', 'password', 'confirmPassword'],
-	            buttons:[{label:'Login',buttonClass:'btn btn-primary'}]
+	            buttons: [{ label: 'Login', buttonClass: 'btn btn-primary' }]
 	        }]
 	    },
 	    data: {},
@@ -630,12 +622,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }]
 	    }
 
-
-	}
+	};
 
 /***/ },
 /* 22 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: 'Shows how you could use a conditional with a modal',
@@ -666,25 +659,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    dismiss: 'showAddressModal',
 	                    title: "See the modal?",
 	                    buttons: {
-	                        buttonsClass:'pull-right btn-group',
-	                        buttons: [
-	                            {
-	                                label: "Cancel",
-	                                action: 'cancel',
-	                                className: 'btn'
-	                            },
-	                            {
-	                                label: "Save",
-	                                action: 'submit',
-	                                className: 'btn btn-primary'
-	                            }
-	                        ]
+	                        buttonsClass: 'pull-right btn-group',
+	                        buttons: [{
+	                            label: "Cancel",
+	                            action: 'cancel',
+	                            className: 'btn'
+	                        }, {
+	                            label: "Save",
+	                            action: 'submit',
+	                            className: 'btn btn-primary'
+	                        }]
 	                    }
 	                },
 
 	                fields: "street, city, state, zip",
 	                subSchema: {
-	                    street: {type: 'Text', validators: ['required']},
+	                    street: { type: 'Text', validators: ['required'] },
 	                    city: 'Text',
 	                    state: {
 	                        options: ['CA', 'NV', 'DE'],
@@ -692,7 +682,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    },
 	                    zip: {
 	                        type: 'Text',
-	                        validators: ['required', {type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/'}]
+	                        validators: ['required', { type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/' }]
 	                    }
 	                }
 	            }
@@ -700,13 +690,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "fieldsets": [{
 	            "legend": "Name",
 	            "fields": ["title", "name", "email", "showAddressModal", "address"],
-	            buttons: [
-
-	                {
-	                    label: "Submit",
-	                    className: 'btn btn-primary pull-right'
-	                }
-	            ]
+	            buttons: [{
+	                label: "Submit",
+	                className: 'btn btn-primary pull-right'
+	            }]
 	        }]
 	    },
 	    data: {
@@ -728,10 +715,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-
 /***/ },
 /* 23 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: 'Nested froms allow for deeply structured object<br/>. If you need more flexibility consider Mixed or List',
@@ -751,7 +739,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                type: "Object",
 	                title: false,
 	                subSchema: {
-	                    street: {type: 'Text', validators: ['required']},
+	                    street: { type: 'Text', validators: ['required'] },
 	                    city: 'Text',
 	                    state: {
 	                        options: ['CA', 'NV', 'DE'],
@@ -759,7 +747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    },
 	                    zip: {
 	                        type: 'Text',
-	                        validators: ['required', {type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/'}]
+	                        validators: ['required', { type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/' }]
 	                    }
 	                }
 	            }
@@ -768,13 +756,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "fieldsets": [{
 	            "legend": "Name",
 	            "fields": ["title", "name", "email"]
-	        },
-	            {
-	                legend: "Address",
-	                fields: "address.street, address.city, address.state, address.zip"
-	            }
-
-	        ]
+	        }, {
+	            legend: "Address",
+	            fields: "address.street, address.city, address.state, address.zip"
+	        }]
 	    },
 	    data: {
 	        title: 'Mr',
@@ -794,10 +779,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 
-
 /***/ },
 /* 24 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'Questionaire shows the used of the Mixed Type. \
@@ -845,17 +831,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            message: 'Are you sure?'
 	        }]
 	    }
-	}
+	};
 
 /***/ },
 /* 25 */
 /***/ function(module, exports) {
 
+	"use strict";
+
 	module.exports = {
 	    description: 'Super basic form, with select and a requied name',
 	    schema: {
 	        "schema": {
-	            "mm/yy": {"type": "Restricted", formatter: "shortDate", title: "MM/YY"},
+	            "mm/yy": { "type": "Restricted", formatter: "shortDate", title: "MM/YY" },
 	            "ccard": {
 	                "type": "Restricted",
 	                "formatter": "creditcard"
@@ -887,27 +875,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	                "title": "US Phone",
 	                "type": "Restricted",
 	                "formatter": "1 (###) ###-####"
-	            }/*,
-	             'dollars':{
-	             "title":"US Dollars",
-	             "type":"Restricted",
-	             "formatter":"00.00"
-	             }
-	             */
+	            } /*,
+	              'dollars':{
+	              "title":"US Dollars",
+	              "type":"Restricted",
+	              "formatter":"00.00"
+	              }
+	              */
 	        },
 	        "fieldsets": [{
 	            "legend": "Restricted values",
-	            "fields": ["unrestricted", "title","capitalize", "mm/yy", "ccard", "uszip", "###", 'usphone']
+	            "fields": ["unrestricted", "title", "capitalize", "mm/yy", "ccard", "uszip", "###", 'usphone']
 	        }]
 	    },
 	    data: {
 	        "mm/yy": '02/22',
 	        "ccard": '4111 1111 1111 1111',
-	        "usphone":"1 (555) 123-4567",
-	        "capitalize":"Hello world",
-	        "title":"Hello World",
-	        "###":"123",
-	        "uszip":"22202"
+	        "usphone": "1 (555) 123-4567",
+	        "capitalize": "Hello world",
+	        "title": "Hello World",
+	        "###": "123",
+	        "uszip": "22202"
 	    },
 	    errors: {
 	        ccard: [{
@@ -917,88 +905,73 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	};
 
-
 /***/ },
 /* 26 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: 'Selects for selection',
 	    schema: {
 	        schema: {
 	            select: {
-	                options: [
-	                    {
-	                        val: 0,
-	                        label: "Option 1"
-	                    },
-	                    {
-	                        val: 1,
-	                        label: "Option 2"
-	                    },
-	                    {
-	                        val: 2,
-	                        label: "Option 3"
-	                    }
-	                ],
+	                options: [{
+	                    val: 0,
+	                    label: "Option 1"
+	                }, {
+	                    val: 1,
+	                    label: "Option 2"
+	                }, {
+	                    val: 2,
+	                    label: "Option 3"
+	                }],
 	                type: 'Select'
 	            },
 	            withPlaceholder: {
 	                placeholder: 'Please Select An Option',
 	                help: 'The placeholder becomes the default selection on an select box, use required to force selection',
-	                options: [
-	                    {
-	                        val: 0,
-	                        label: "Option 1"
-	                    },
-	                    {
-	                        val: 1,
-	                        label: "Option 2"
-	                    },
-	                    {
-	                        val: 2,
-	                        label: "Option 3"
-	                    }
-	                ],
+	                options: [{
+	                    val: 0,
+	                    label: "Option 1"
+	                }, {
+	                    val: 1,
+	                    label: "Option 2"
+	                }, {
+	                    val: 2,
+	                    label: "Option 3"
+	                }],
 	                type: 'Select'
 	            },
 	            multiple: {
 	                multiple: true,
 	                help: 'The placeholder becomes you can select multiple, not having a placeholder forces selection',
-	                options: [
-	                    {
-	                        val: 0,
-	                        label: "Option 1"
-	                    },
-	                    {
-	                        val: 1,
-	                        label: "Option 2"
-	                    },
-	                    {
-	                        val: 2,
-	                        label: "Option 3"
-	                    }
-	                ],
+	                options: [{
+	                    val: 0,
+	                    label: "Option 1"
+	                }, {
+	                    val: 1,
+	                    label: "Option 2"
+	                }, {
+	                    val: 2,
+	                    label: "Option 3"
+	                }],
 	                type: 'Select'
 	            },
 	            multipleWithPlaceholder: {
 	                multiple: true,
-	                placeholder:'You do not have to choose',
+	                placeholder: 'You do not have to choose',
 	                help: 'The placeholder becomes you can select multiple, having a placeholder allows for null selection (hold shift keys to select multiple)',
-	                options: [
-	                    {
-	                        val: 0,
-	                        label: "Option 1"
-	                    },
-	                    {
-	                        val: 1,
-	                        label: "Option 2"
-	                    },
-	                    {
-	                        val: 2,
-	                        label: "Option 3"
-	                    }
-	                ],
+	                options: [{
+	                    val: 0,
+	                    label: "Option 1"
+	                }, {
+	                    val: 1,
+	                    label: "Option 2"
+	                }, {
+	                    val: 2,
+	                    label: "Option 3"
+	                }],
 	                type: 'Select'
 	            }
 	        }
@@ -1010,12 +983,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    errors: {}
 
-
-	}
+	};
 
 /***/ },
 /* 27 */
 /***/ function(module, exports) {
+
+	"use strict";
 
 	module.exports = {
 	    description: 'A super simple <b>Todo List</b> because every body\'s gotta.   This one shows how the List type works.   List editing can be turned on or off, by default its off ',
@@ -1028,8 +1002,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                canDelete: true,
 	                canReorder: true,
 	                canEdit: true,
-	                inline:true,
-	                addButton:{
+	                inline: true,
+	                addButton: {
 	                    "label": "Add Task",
 	                    "className": "btn btn-default btn-add"
 	                }
@@ -1048,13 +1022,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            message: 'No your not going to'
 	        }]
 	    }
-	}
-	;
-
+	};
 
 /***/ },
 /* 28 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'This shows a multistep form aka Wizard.\
@@ -1089,7 +1063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            },
 	            confirmPassword: {
 	                type: 'Password',
-	                validators: ['required', {type: 'match', field: 'password', message: 'Passwords do not match'}]
+	                validators: ['required', { type: 'match', field: 'password', message: 'Passwords do not match' }]
 	            },
 	            terms: {
 	                type: 'Checkbox',
@@ -1097,8 +1071,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            },
 	            address: {
 	                type: 'Object',
-	                title:false,
-	                help:false,
+	                title: false,
+	                help: false,
 	                subSchema: {
 	                    'address': {
 	                        type: 'Text',
@@ -1117,7 +1091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 
 	        },
-	        template:'WizardTemplate',
+	        template: 'WizardTemplate',
 	        fieldsets: [{
 	            legend: 'Account',
 	            fields: ['username', 'password', 'confirmPassword']
@@ -1130,21 +1104,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	            fields: ['address.address', 'address.city', 'address.state']
 	        }]
 	    }
-	}
+	};
 
 /***/ },
 /* 29 */
 /***/ function(module, exports) {
+
+	'use strict';
 
 	module.exports = {
 	    description: 'Getting radios right is suprisingly tricky.  Here we demonstrate how to use groups radios and radio groups',
 	    schema: {
 	        schema: {
 	            radio1: {
-	                options:  "Option 1, Option 2, Option 3",
+	                options: "Option 1, Option 2, Option 3",
 	                checkedClass: 'checked',
 	                type: 'Radio',
-	                title:'Radio with forceSelection',
+	                title: 'Radio with forceSelection',
 	                forceSelection: true
 	            },
 	            radio2: {
@@ -1153,11 +1129,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                type: 'Radio'
 	            },
 	            radioWithLabel: {
-	                options: [
-	                    {
-	                        label: '<b>HTML</b>'
-	                    }
-	                ],
+	                options: [{
+	                    label: '<b>HTML</b>'
+	                }],
 	                type: 'Radio'
 	            }
 	        }
@@ -1169,8 +1143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    errors: {}
 
-
-	}
+	};
 
 /***/ },
 /* 30 */
