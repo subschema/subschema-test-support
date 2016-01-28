@@ -1,10 +1,10 @@
 {
   "name": "subschema-test-support",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Subschema test support",
   "loader": "lib/sample-loader.js",
   "main": "lib/index.js",
-   "publishConfig": {
+  "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
