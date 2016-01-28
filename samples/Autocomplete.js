@@ -22,8 +22,5 @@ module.exports = {
             label: 'a 1'
         }
     },
-    setup: function (context, props) {
-        props.loader = 'Subschema.loaderFactory([Subschema.DefaultLoader])';
-    },
     setupFile: 'Autocomplete-setup.js'
 };

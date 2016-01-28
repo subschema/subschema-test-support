@@ -140,9 +140,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            label: 'a 1'
 	        }
 	    },
-	    setup: function setup(context, props) {
-	        props.loader = 'Subschema.loaderFactory([Subschema.DefaultLoader])';
-	    },
 	    setupFile: 'Autocomplete-setup.js'
 	};
 
