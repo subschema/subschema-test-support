@@ -1,9 +1,12 @@
 {
   "name": "subschema-test-support",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Subschema test support",
   "loader": "lib/sample-loader.js",
   "main": "lib/index.js",
+   "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "compile": "babel src -s --out-dir lib && npm run webpack",
     "test": "npm run compile && node -e 'process.exit(0)' -r ./samples.js",
