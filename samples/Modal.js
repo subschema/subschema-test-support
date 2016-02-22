@@ -19,42 +19,27 @@ module.exports = {
             },
             "address": {
                 type: "Object",
-                title: false,
                 conditional: {
                     listen: "showAddressModal",
                     operator: "truthy",
-                    template: 'ModalTemplate',
                     dismiss: 'showAddressModal',
-                    title: "See the modal?",
-                    buttons: {
-                        buttonsClass:'pull-right btn-group',
-                        buttons: [
-                            {
-                                label: "Cancel",
-                                action: 'cancel',
-                                className: 'btn'
-                            },
-                            {
-                                label: "Save",
-                                action: 'submit',
-                                className: 'btn btn-primary'
-                            }
-                        ]
-                    }
                 },
-
-                fields: "street, city, state, zip",
+                template:'ModalTemplate',
+                title: "See the modal?",
                 subSchema: {
-                    street: {type: 'Text', validators: ['required']},
-                    city: 'Text',
-                    state: {
-                        options: ['CA', 'NV', 'DE'],
-                        type: 'Select'
+                    schema: {
+                        street: {type: 'Text', validators: ['required']},
+                        city: 'Text',
+                        state: {
+                            options: ['CA', 'NV', 'DE'],
+                            type: 'Select'
+                        },
+                        zip: {
+                            type: 'Text',
+                            validators: ['required', {type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/'}]
+                        }
                     },
-                    zip: {
-                        type: 'Text',
-                        validators: ['required', {type: 'regexp', regexp: '/^[0-9]{5}(-([0-9]{4}))?$/'}]
-                    }
+                    fields: "street, city, state, zip",
                 }
             }
         },

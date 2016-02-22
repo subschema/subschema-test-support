@@ -117,31 +117,34 @@ function asNode(node) {
 function findNode(n) {
     return ReactDOM.findDOMNode(asNode(n));
 }
-function context(ctx) {
-    if (ctx == null) {
-        ctx = {
+function defChildContext() {
+    return {
             valueManager: ValueManager(),
             loader: loader
+    };
         }
-    }
-    var childContextTypes = {
+function context(childContext = defChildContext, childContextTypes = {
         valueManager: PropTypes.valueManager,
         loader: PropTypes.loader
+}) {
+
+    const getChildContext = typeof childContext === 'function' ? childContext : function () {
+        return childContext;
     };
 
-    var Context = React.createClass({
-        childContextTypes,
-        getChildContext() {
-            return ctx
-        },
+    class Context extends Component {
+        static childContextTypes = childContextTypes;
+
+        getChildContext = getChildContext;
+
         render(){
             return this.props.children;
         }
-    });
+    }
     return Context;
 }
-function intoWithContext(child, ctx, debug) {
-    var Context = context(ctx)
+function intoWithContext(child, ctx, debug, contextTypes) {
+    var Context = context(ctx, contextTypes);
     return byType(into(<Context>{child}</Context>, debug), child.type);
 }
 
