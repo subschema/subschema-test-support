@@ -23,8 +23,17 @@ function notByType(node, type, description) {
     var ret = byTypes(node, type);
     expect(ret[0]).toNotExist(description);
 }
-function byTypes(node, type) {
-    return TestUtils.scryRenderedComponentsWithType(node, type);
+function expected(nodes, length) {
+    if (length === void(0)) {
+        return nodes;
+    }
+    if (nodes.length !== length) {
+        throw new Error(`Found ${node.length} nodes expected ${length}`);
+    }
+    return nodes;
+}
+function byTypes(node, type, length) {
+    return expected(TestUtils.scryRenderedComponentsWithType(node, type), length);
 }
 function byType(node, type) {
     return TestUtils.findRenderedComponentWithType(node, type);
@@ -37,8 +46,8 @@ function byTag(node, tag) {
     return TestUtils.findRenderedDOMComponentWithTag(node, tag);
 }
 
-function byTags(node, tag) {
-    return TestUtils.scryRenderedDOMComponentsWithTag(node, tag);
+function byTags(node, tag, length) {
+    return expected(TestUtils.scryRenderedDOMComponentsWithTag(node, tag), length);
 }
 function onlyOne(node) {
     if (node.length != 1) {
@@ -84,8 +93,8 @@ function change(node, value) {
     Simulate.change(findNode(node), {target: {value}});
     return node;
 }
-function check(node, checked) {
-    Simulate.change(findNode(node), {target: {checked}});
+function check(node, checked, value) {
+    Simulate.change(findNode(node), {target: {checked, value}});
     return node;
 }
 function blur(node) {
@@ -102,8 +111,8 @@ function byComponent(node, comp) {
     return onlyOne(TestUtils.scryRenderedComponentsWithType(asNode(node), comp));
 }
 
-function byComponents(node, comp) {
-    return TestUtils.scryRenderedComponentsWithType(asNode(node), comp);
+function byComponents(node, comp, length) {
+    return expected(TestUtils.scryRenderedComponentsWithType(asNode(node), comp), length);
 }
 function byClass(node, className) {
     return TestUtils.scryRenderedDOMComponentsWithClass(asNode(node), className);
@@ -119,13 +128,13 @@ function findNode(n) {
 }
 function defChildContext() {
     return {
-            valueManager: ValueManager(),
-            loader: loader
+        valueManager: ValueManager(),
+        loader: loader
     };
-        }
+}
 function context(childContext = defChildContext, childContextTypes = {
-        valueManager: PropTypes.valueManager,
-        loader: PropTypes.loader
+    valueManager: PropTypes.valueManager,
+    loader: PropTypes.loader
 }) {
 
     const getChildContext = typeof childContext === 'function' ? childContext : function () {
@@ -137,7 +146,7 @@ function context(childContext = defChildContext, childContextTypes = {
 
         getChildContext = getChildContext;
 
-        render(){
+        render() {
             return this.props.children;
         }
     }
@@ -216,5 +225,6 @@ export {
     change,
     check,
     blur,
-    focus
+    focus,
+    expected
 }
