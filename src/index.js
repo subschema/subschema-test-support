@@ -1,6 +1,6 @@
 "use strict";
 import React, {Component} from 'react';
-import { PropTypes, ValueManager, loader} from 'Subschema';
+import { PropTypes, ValueManager, loader, injector} from 'Subschema';
 import ReactDOM from 'react-dom';
 import TestUtils from 'react-addons-test-utils';
 import expect from 'expect';
@@ -37,9 +37,6 @@ function byTypes(node, type, length) {
 }
 function byType(node, type) {
     return TestUtils.findRenderedComponentWithType(node, type);
-}
-function click(node) {
-    Simulate.click(findNode(node));
 }
 
 function byTag(node, tag) {
@@ -89,6 +86,11 @@ function byId(node, id) {
     return onlyOne(all);
 }
 
+function click(node) {
+    Simulate.click(findNode(node));
+    return node;
+}
+
 function change(node, value) {
     Simulate.change(findNode(node), {target: {value}});
     return node;
@@ -129,12 +131,14 @@ function findNode(n) {
 function defChildContext() {
     return {
         valueManager: ValueManager(),
-        loader: loader
+        loader: loader,
+        injector: injector
     };
 }
 function context(childContext = defChildContext, childContextTypes = {
     valueManager: PropTypes.valueManager,
-    loader: PropTypes.loader
+    loader: PropTypes.loader,
+    injector: PropTypes.injector
 }) {
 
     const getChildContext = typeof childContext === 'function' ? childContext : function () {
