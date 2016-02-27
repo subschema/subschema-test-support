@@ -10,6 +10,7 @@ var Simulate = TestUtils.Simulate;
 function prettyLog(result) {
     console.log(JSON.stringify(result, null, '\t'));
 }
+
 function into(node, debug) {
     if (debug === true) {
         debug = document.createElement('div');
