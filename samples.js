@@ -58,7 +58,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	///(?!.*(index).js$).*\.js(x)
 	var ctx = __webpack_require__(1);
-	var rctx = __webpack_require__(30);
+	var rctx = __webpack_require__(31);
 	module.exports = ctx.keys().reduce(function (obj, key) {
 
 	    if (/(index|-setup|context)/.test(key)) {
@@ -95,8 +95,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		"./Restricted.js": 25,
 		"./Select.js": 26,
 		"./Todos.js": 27,
-		"./Wizard.js": 28,
-		"./radio.js": 29
+		"./Transitions.js": 28,
+		"./Wizard.js": 29,
+		"./radio.js": 30
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -1016,6 +1017,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	module.exports = {
+	    data: {
+	        'phoneOrEmail': 'phone'
+	    },
+	    description: 'Shows how you can use Transitions on fieldsets',
+	    schema: {
+	        schema: {
+	            phoneOrEmail: {
+	                type: 'Radio',
+	                title: false,
+	                options: [{ label: "Phone", val: "phone" }, { label: "Email", val: "email" }]
+	            },
+	            "phone": {
+	                "type": "Text",
+	                "template": {
+	                    template: "SpecialTemplate",
+	                    className: "on"
+	                }
+	            },
+	            "canWePhone": "Checkbox",
+	            "canWeEmail": "Checkbox",
+	            "email": {
+	                "type": "Text"
+	            }
+	        },
+	        fieldsets: [{ legend: "Would you prefer us contact you via?", fields: "phoneOrEmail" }, {
+	            legend: "Phone",
+	            buttons: ["Call Me"],
+	            fields: ["phone", "canWePhone"],
+	            conditional: {
+	                listen: "phoneOrEmail",
+	                operator: "==",
+	                value: "phone",
+	                transition: {
+	                    transition: "rollUp",
+	                    on: ["appear", "enter", "leave"]
+	                }
+	            }
+	        }, {
+	            legend: "Email",
+	            buttons: ["Email Me"],
+	            fields: ["email", "canWeEmail"],
+	            conditional: {
+	                listen: "phoneOrEmail",
+	                operator: "==",
+	                value: "email",
+	                transition: "rollUp"
+	            }
+	        }]
+	    }
+	};
+
+/***/ },
+/* 29 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
 	    description: 'This shows a multistep form aka Wizard.\
 	    The basics are your fieldsets become steps in a wizard.  The legend becomes the label and the fields are rendered\
 	    Sometimes you a good wizard goes a long way\
@@ -1092,7 +1151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1131,17 +1190,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
-		"./Autocomplete-setup.js": 31,
-		"./CarMake-setup.js": 32,
-		"./CustomType-setup.js": 33,
-		"./Expression-setup.js": 34,
-		"./KitchenSink-setup.js": 35,
-		"./ListenerProperty-setup.js": 36,
-		"./Loader-setup.js": 37
+		"./Autocomplete-setup.js": 32,
+		"./CarMake-setup.js": 33,
+		"./CustomType-setup.js": 34,
+		"./Expression-setup.js": 35,
+		"./KitchenSink-setup.js": 36,
+		"./ListenerProperty-setup.js": 37,
+		"./Loader-setup.js": 38
 	};
 	function webpackContext(req) {
 		return __webpack_require__(webpackContextResolve(req));
@@ -1154,47 +1213,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	webpackContext.resolve = webpackContextResolve;
 	module.exports = webpackContext;
-	webpackContext.id = 30;
+	webpackContext.id = 31;
 
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	module.exports = "/**\n * Register a fake loader.\n * @type {{fetch: Function, format: Function}}\n */\nvar fakeAjax = {\n    fetch: function (url, value, component, cb) {\n        //You can fire an ajax request here.\n        var ti = setTimeout(function () {\n            var ret = [];\n            for (var i = 0; i < (10 - value.length); i++) {\n                ret.push({\n                    val: i,\n                    label: value + ' ' + i\n                });\n            }\n\n            //callback err, value.\n            cb(null, ret);\n        }, 200);\n        return {\n            cancel: function () {\n                //You could abort an AJAX request here.\n                clearTimeout(ti);\n            }\n        }\n\n    },\n    value: function (obj) {\n        return obj && obj.val;\n    },\n    format: function (value) {\n        return value && value.label;\n    }\n};\n\nvar fakeLoader = {\n    loadProcessor: function (name) {\n        if (name === 'fakeAjax') {\n            return fakeAjax\n        }\n    },\n    listProcessors: function () {\n        return [{name: 'fakeAjax', processor: fakeAjax}]\n    }\n};\n\nloader.addLoader(fakeLoader);"
 
 /***/ },
 /* 32 */
 /***/ function(module, exports) {
 
-	module.exports = "/**\n * Borrowed from react-native docs.\n */\nvar CAR_MAKES_AND_MODELS = {\n    amc: {\n        name: 'AMC',\n        models: ['AMX', 'Concord', 'Eagle', 'Gremlin', 'Matador', 'Pacer']\n    },\n    alfa: {\n        name: 'Alfa-Romeo',\n        models: ['159', '4C', 'Alfasud', 'Brera', 'GTV6', 'Giulia', 'MiTo', 'Spider']\n    },\n    aston: {\n        name: 'Aston Martin',\n        models: ['DB5', 'DB9', 'DBS', 'Rapide', 'Vanquish', 'Vantage']\n    },\n    audi: {\n        name: 'Audi',\n        models: ['90', '4000', '5000', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q5', 'Q7']\n    },\n    austin: {\n        name: 'Austin',\n        models: ['America', 'Maestro', 'Maxi', 'Mini', 'Montego', 'Princess']\n    },\n    borgward: {\n        name: 'Borgward',\n        models: ['Hansa', 'Isabella', 'P100']\n    },\n    buick: {\n        name: 'Buick',\n        models: ['Electra', 'LaCrosse', 'LeSabre', 'Park Avenue', 'Regal',\n            'Roadmaster', 'Skylark']\n    },\n    cadillac: {\n        name: 'Cadillac',\n        models: ['Catera', 'Cimarron', 'Eldorado', 'Fleetwood', 'Sedan de Ville']\n    },\n    chevrolet: {\n        name: 'Chevrolet',\n        models: ['Astro', 'Aveo', 'Bel Air', 'Captiva', 'Cavalier', 'Chevelle',\n            'Corvair', 'Corvette', 'Cruze', 'Nova', 'SS', 'Vega', 'Volt']\n    }\n};\n\nvar fields = schema.fieldsets[0].fields;\n/**\n * Create the schema programatically.\n */\nschema.schema.make.options = Object.keys(CAR_MAKES_AND_MODELS).map(function (key) {\n    fields.push(key);\n    var {name, models} = CAR_MAKES_AND_MODELS[key];\n    //setup the key values of them all.\n    schema.schema[key] = {\n        title: 'Model',\n        conditional: {\n            //This is the value to listen to trigger the conditional\n            listen: 'make',\n            //This is the value to compare the make's value to\n            value: key,\n            //Strict equals operator\n            operator: '===',\n            //We want the conditional to update the 'model' path.  This is a bit\n            // experimental at the time, but may be the future of how to handle these\n            // situations.\n            path: 'model'\n        },\n        type: 'Select',\n        placeholder:'Select a model of '+name,\n        options: models\n    }\n    /**\n     * Return the makes\n     */\n    return {\n        label: name,\n        val: key\n    }\n});\n"
+	module.exports = "/**\n * Register a fake loader.\n * @type {{fetch: Function, format: Function}}\n */\nvar fakeAjax = {\n    fetch: function (url, value, component, cb) {\n        //You can fire an ajax request here.\n        var ti = setTimeout(function () {\n            var ret = [];\n            for (var i = 0; i < (10 - value.length); i++) {\n                ret.push({\n                    val: i,\n                    label: value + ' ' + i\n                });\n            }\n\n            //callback err, value.\n            cb(null, ret);\n        }, 200);\n        return {\n            cancel: function () {\n                //You could abort an AJAX request here.\n                clearTimeout(ti);\n            }\n        }\n\n    },\n    value: function (obj) {\n        return obj && obj.val;\n    },\n    format: function (value) {\n        return value && value.label;\n    }\n};\n\nvar fakeLoader = {\n    loadProcessor: function (name) {\n        if (name === 'fakeAjax') {\n            return fakeAjax\n        }\n    },\n    listProcessors: function () {\n        return [{name: 'fakeAjax', processor: fakeAjax}]\n    }\n};\n\nloader.addLoader(fakeLoader);"
 
 /***/ },
 /* 33 */
 /***/ function(module, exports) {
 
-	module.exports = "const {decorators, PropTypes, tutils} = Subschema;\nconst {provide} = decorators;\nconst {extend} = tutils;\n\n//This adds it to the loader, loader.addType still works.\n@provide.type\nclass SwitchButton extends React.Component {\n    //Prevents form-control from being passed to className.\n    static inputClassName = ' ';\n\n    static propTypes = {\n        //This tells subschema to not process e.target.value, but just take the value.\n        onChange: PropTypes.valueEvent,\n        //Normal React.PropTypes\n        onText: React.PropTypes.string,\n        offText: React.PropTypes.string,\n        value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])])   //Values can be (true, 1, '1', 'ON')\n    };\n\n    static defaultProps = {\n        onText: \"ON\",\n        offText: \"OFF\"\n    };\n\n    //In case you have \"special\" value handling.\n    isChecked(value) {\n        return value === true || value === 1 || value === 'on';\n    }\n\n    //This is bound to the object instance\n    handleClick = (e)=> {\n        //This updates the valueManager\n        this.props.onChange(this.isChecked(this.props.value) ? '' : 'on');\n    };\n\n    render() {\n        var props = this.props;\n        var isChecked = this.isChecked(props.value);\n\n        //you prolly won't do it this way, but use classes instead, but the demo platform\n        // has its limitations.\n        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);\n        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);\n\n        return <div className={props.className} style={styles.fieldContainer}>\n            <div style={container} onClick={this.handleClick}>\n                <input name={props.name} type=\"hidden\" value={this.props.value}/>\n                {isChecked === true ? props.onText : props.offText}\n                <span style={button}/>\n            </div>\n        </div>\n    }\n\n}\n\n//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.\nvar styles = {\n    fieldContainer: {\n        display: 'block',\n        width: '100%',\n        height: '34px',\n        padding: '6px 12px',\n        fontSize: '14px',\n        lineHeight: '1.42857143',\n        color: '#555',\n        backgroundColor: '#fff'\n    },\n    container: {\n        position: 'relative',\n        borderRadius: \"11px\",\n        backgroundColor: '#fff',\n        border: 'inset 2px',\n        boxSizing: 'border-box',\n        display: 'inline-block'\n    },\n    on: {\n        color: 'white',\n        backgroundColor: 'blue',\n        paddingLeft: '20px',\n        paddingRight: '6px',\n\n    },\n    off: {\n        paddingLeft: '6px',\n        paddingRight: '20px'\n    },\n    button: {\n        top: 2,\n        display: 'inline-block',\n        height: '16px',\n        width: '16px',\n        boxSizing: 'border-box',\n        borderRadius: '8px',\n        border: '5px outset rgba(204, 204, 204, .4)',\n        position: 'absolute',\n        transition: 'all .2s',\n\n    },\n    buttonOn: {\n        left: 1,\n        border:'5px outset rgba(255,255,255,.8)'\n\n    },\n    buttonOff: {\n        left: '100%',\n        marginLeft: '-18px',\n    }\n};\n"
+	module.exports = "/**\n * Borrowed from react-native docs.\n */\nvar CAR_MAKES_AND_MODELS = {\n    amc: {\n        name: 'AMC',\n        models: ['AMX', 'Concord', 'Eagle', 'Gremlin', 'Matador', 'Pacer']\n    },\n    alfa: {\n        name: 'Alfa-Romeo',\n        models: ['159', '4C', 'Alfasud', 'Brera', 'GTV6', 'Giulia', 'MiTo', 'Spider']\n    },\n    aston: {\n        name: 'Aston Martin',\n        models: ['DB5', 'DB9', 'DBS', 'Rapide', 'Vanquish', 'Vantage']\n    },\n    audi: {\n        name: 'Audi',\n        models: ['90', '4000', '5000', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q5', 'Q7']\n    },\n    austin: {\n        name: 'Austin',\n        models: ['America', 'Maestro', 'Maxi', 'Mini', 'Montego', 'Princess']\n    },\n    borgward: {\n        name: 'Borgward',\n        models: ['Hansa', 'Isabella', 'P100']\n    },\n    buick: {\n        name: 'Buick',\n        models: ['Electra', 'LaCrosse', 'LeSabre', 'Park Avenue', 'Regal',\n            'Roadmaster', 'Skylark']\n    },\n    cadillac: {\n        name: 'Cadillac',\n        models: ['Catera', 'Cimarron', 'Eldorado', 'Fleetwood', 'Sedan de Ville']\n    },\n    chevrolet: {\n        name: 'Chevrolet',\n        models: ['Astro', 'Aveo', 'Bel Air', 'Captiva', 'Cavalier', 'Chevelle',\n            'Corvair', 'Corvette', 'Cruze', 'Nova', 'SS', 'Vega', 'Volt']\n    }\n};\n\nvar fields = schema.fieldsets[0].fields;\n/**\n * Create the schema programatically.\n */\nschema.schema.make.options = Object.keys(CAR_MAKES_AND_MODELS).map(function (key) {\n    fields.push(key);\n    var {name, models} = CAR_MAKES_AND_MODELS[key];\n    //setup the key values of them all.\n    schema.schema[key] = {\n        title: 'Model',\n        conditional: {\n            //This is the value to listen to trigger the conditional\n            listen: 'make',\n            //This is the value to compare the make's value to\n            value: key,\n            //Strict equals operator\n            operator: '===',\n            //We want the conditional to update the 'model' path.  This is a bit\n            // experimental at the time, but may be the future of how to handle these\n            // situations.\n            path: 'model'\n        },\n        type: 'Select',\n        placeholder:'Select a model of '+name,\n        options: models\n    }\n    /**\n     * Return the makes\n     */\n    return {\n        label: name,\n        val: key\n    }\n});\n"
 
 /***/ },
 /* 34 */
 /***/ function(module, exports) {
 
-	module.exports = "const {PropTypes, decorators} = Subschema;\nconst {provide} = decorators;\nconst {type} = provide;\n\n@type\nclass Anchor extends React.Component {\n\n    static propTypes = {\n        //by making this propType an expression it will evaluate it dynamically.\n        href: PropTypes.expression,\n        label: PropTypes.expression\n    };\n\n    static defaultProps = {\n        href: '#/{.}'\n    };\n\n    render() {\n        return <a href={this.props.href}>{this.props.label}</a>\n    }\n}\n\n"
+	module.exports = "const {decorators, PropTypes, tutils} = Subschema;\nconst {provide} = decorators;\nconst {extend} = tutils;\n\n//This adds it to the loader, loader.addType still works.\n@provide.type\nclass SwitchButton extends React.Component {\n    //Prevents form-control from being passed to className.\n    static inputClassName = ' ';\n\n    static propTypes = {\n        //This tells subschema to not process e.target.value, but just take the value.\n        onChange: PropTypes.valueEvent,\n        //Normal React.PropTypes\n        onText: React.PropTypes.string,\n        offText: React.PropTypes.string,\n        value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])])   //Values can be (true, 1, '1', 'ON')\n    };\n\n    static defaultProps = {\n        onText: \"ON\",\n        offText: \"OFF\"\n    };\n\n    //In case you have \"special\" value handling.\n    isChecked(value) {\n        return value === true || value === 1 || value === 'on';\n    }\n\n    //This is bound to the object instance\n    handleClick = (e)=> {\n        //This updates the valueManager\n        this.props.onChange(this.isChecked(this.props.value) ? '' : 'on');\n    };\n\n    render() {\n        var props = this.props;\n        var isChecked = this.isChecked(props.value);\n\n        //you prolly won't do it this way, but use classes instead, but the demo platform\n        // has its limitations.\n        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);\n        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);\n\n        return <div className={props.className} style={styles.fieldContainer}>\n            <div style={container} onClick={this.handleClick}>\n                <input name={props.name} type=\"hidden\" value={this.props.value}/>\n                {isChecked === true ? props.onText : props.offText}\n                <span style={button}/>\n            </div>\n        </div>\n    }\n\n}\n\n//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.\nvar styles = {\n    fieldContainer: {\n        display: 'block',\n        width: '100%',\n        height: '34px',\n        padding: '6px 12px',\n        fontSize: '14px',\n        lineHeight: '1.42857143',\n        color: '#555',\n        backgroundColor: '#fff'\n    },\n    container: {\n        position: 'relative',\n        borderRadius: \"11px\",\n        backgroundColor: '#fff',\n        border: 'inset 2px',\n        boxSizing: 'border-box',\n        display: 'inline-block'\n    },\n    on: {\n        color: 'white',\n        backgroundColor: 'blue',\n        paddingLeft: '20px',\n        paddingRight: '6px',\n\n    },\n    off: {\n        paddingLeft: '6px',\n        paddingRight: '20px'\n    },\n    button: {\n        top: 2,\n        display: 'inline-block',\n        height: '16px',\n        width: '16px',\n        boxSizing: 'border-box',\n        borderRadius: '8px',\n        border: '5px outset rgba(204, 204, 204, .4)',\n        position: 'absolute',\n        transition: 'all .2s',\n\n    },\n    buttonOn: {\n        left: 1,\n        border:'5px outset rgba(255,255,255,.8)'\n\n    },\n    buttonOff: {\n        left: '100%',\n        marginLeft: '-18px',\n    }\n};\n"
 
 /***/ },
 /* 35 */
 /***/ function(module, exports) {
 
-	module.exports = "loader.listTypes().forEach(function (type) {\n    schema.schema[type.name] = {\n        type: type.name,\n        fieldClass: 'row'\n    }\n});\n"
+	module.exports = "const {PropTypes, decorators} = Subschema;\nconst {provide} = decorators;\nconst {type} = provide;\n\n@type\nclass Anchor extends React.Component {\n\n    static propTypes = {\n        //by making this propType an expression it will evaluate it dynamically.\n        href: PropTypes.expression,\n        label: PropTypes.expression\n    };\n\n    static defaultProps = {\n        href: '#/{.}'\n    };\n\n    render() {\n        return <a href={this.props.href}>{this.props.label}</a>\n    }\n}\n\n"
 
 /***/ },
 /* 36 */
 /***/ function(module, exports) {
 
-	module.exports = "var {PropTypes, decorators, types} = Subschema;\nvar {provide} = decorators;\nvar {type} = provide;\nvar {Select} = types;\n\n//copy propTypes (don't ref it will break Select)\nvar {options, ...copyPropTypes} = Select.propTypes;\ncopyPropTypes.options = PropTypes.listener;\n\n@type\nclass SelectListen extends React.Component {\n    static propTypes = copyPropTypes;\n\n    render() {\n        var value = this.props.value;\n        if (value == null && this.props.options) {\n            value = this.props.options[0].val;\n        }\n        return <Select {...this.props} value={value}/>\n    }\n}\n"
+	module.exports = "loader.listTypes().forEach(function (type) {\n    schema.schema[type.name] = {\n        type: type.name,\n        fieldClass: 'row'\n    }\n});\n"
 
 /***/ },
 /* 37 */
+/***/ function(module, exports) {
+
+	module.exports = "var {PropTypes, decorators, types} = Subschema;\nvar {provide} = decorators;\nvar {type} = provide;\nvar {Select} = types;\n\n//copy propTypes (don't ref it will break Select)\nvar {options, ...copyPropTypes} = Select.propTypes;\ncopyPropTypes.options = PropTypes.listener;\n\n@type\nclass SelectListen extends React.Component {\n    static propTypes = copyPropTypes;\n\n    render() {\n        var value = this.props.value;\n        if (value == null && this.props.options) {\n            value = this.props.options[0].val;\n        }\n        return <Select {...this.props} value={value}/>\n    }\n}\n"
+
+/***/ },
+/* 38 */
 /***/ function(module, exports) {
 
 	module.exports = "const {types, decorators} = Subschema;\nconst {provide} = decorators;\nconst {type, template} = provide;\nconst {Select, Checkbox} = types;\n//Provide a template named SimpleTempalte\n\n@template\nclass SimpleTemplate extends React.Component {\n    render() {\n        var {name, title, help, errorClassName, message, fieldClass, children} = this.props;\n        return (<div\n            className={\"form-group field-name \" + (message != null ? errorClassName : '') + ' ' +  fieldClass}>\n            <div className=\"col-sm-offset-1 col-sm-10\">\n                {children}\n                <p className=\"help-block\" ref=\"help\">{message || help}</p>\n            </div>\n        </div>);\n    }\n}\n//Provide a type named CheckboxSelect\n@type\nclass CheckboxSelect extends React.Component {\n\n    //allows for injection of the Select types.\n    static propTypes = Select.propTypes;\n\n    constructor(...rest) {\n        super(...rest);\n        //init state\n        this.state = {disabled: false};\n    }\n\n    //inline styles, because this is an example\n    render() {\n        return <div>\n            <Checkbox className='' style={{position: 'absolute',  left:'-5px', top:'5px'}}\n                      onChange={(e)=>this.setState({disabled: !e})} checked={!this.state.disabled}/>\n            <Select {...this.props} disabled={this.state.disabled}/>\n        </div>\n    }\n}\n//Use a class as a schema, this news the class before adding it.\n@provide.schema\nclass Address {\n    schema = {\n        address: 'Text',\n        city: 'Text',\n        state: {\n            type: 'CheckboxSelect',\n            options: 'CA,FL,VA,IL'\n        },\n        zipCode: {\n            type: 'Text',\n            dataType: 'number'\n        }\n    };\n    fields = ['address', 'city', 'state', 'zipCode'];\n}\n//Adding a schema manually, this can also be done for types, templates,validators, etc...\nloader.addSchema({\n    Contact: {\n        schema: {\n            name: 'Text',\n            primary: {\n                type: 'Object',\n                subSchema: 'Address',\n                template: 'SimpleTemplate'\n            },\n            otherAddresses: {\n                canEdit: true,\n                canReorder: true,\n                canDelete: true,\n                canAdd: true,\n                type: 'List',\n                labelKey: 'address',\n                itemType: {\n                    type: 'Object',\n                    subSchema: 'Address'\n                }\n            }\n        },\n        fields: ['name', 'primary', 'otherAddresses']\n    }\n});\n"
