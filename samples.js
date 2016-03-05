@@ -1029,11 +1029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                options: [{ label: "Phone", val: "phone" }, { label: "Email", val: "email" }]
 	            },
 	            "phone": {
-	                "type": "Text",
-	                "template": {
-	                    template: "SpecialTemplate",
-	                    className: "on"
-	                }
+	                "type": "Text"
 	            },
 	            "canWePhone": "Checkbox",
 	            "canWeEmail": "Checkbox",
