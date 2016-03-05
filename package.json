@@ -11,7 +11,7 @@
     "compile": "babel src -s --out-dir lib && npm run webpack",
     "test": "npm run compile && node -e 'process.exit(0)' -r ./samples.js",
     "prepublish": "npm run test",
-    "webpack": "webpack --config ./webpack.config.js"
+    "webpack": "webpack --display-modules --config ./webpack.config.js"
   },
   "author": "<Justin Spears>speajus@gmail.com",
   "license": "ISC",

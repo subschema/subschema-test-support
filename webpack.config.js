@@ -10,6 +10,12 @@ module.exports = {
         library: 'SubschemaTestSupport'
 
     },
+    externals: {
+        'Subschema': 'Subschema',
+        'subschema': 'Subschema',
+        'react': 'react',
+        'react-dom': 'react-dom'
+    },
     entry: {
         samples: join('samples/index.js')
     },
@@ -17,15 +23,9 @@ module.exports = {
         extensions: ['', '.js', '.jsx'],
 
         loaders: [
+
             {
-                test: /.*-setup.jsx?$/,
-                loader: '!!raw!',
-                include: [
-                    join('samples')
-                ]
-            },
-            {
-                test: /(?!.*-setup\.jsx?$)\.jsx?$/,
+                test: /\.jsx?$/,
                 loader: 'babel'
             }
         ]

@@ -59,6 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	///(?!.*(index).js$).*\.js(x)
 	var ctx = __webpack_require__(1);
 	var rctx = __webpack_require__(31);
+	var fctx = __webpack_require__(39);
 	module.exports = ctx.keys().reduce(function (obj, key) {
 
 	    if (/(index|-setup|context)/.test(key)) {
@@ -66,7 +67,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    var setup = obj[key.replace(/\.jsx?$/, '').replace(/.*\//, '')] = ctx(key);
 	    if (setup.setupFile) {
-	        var txt = setup.setupTxt = rctx('./' + setup.setupFile);
+	        setup.setupTxt = rctx('./' + setup.setupFile);
+	        setup.setupFunc = fctx('./' + setup.setupFile);
 	    }
 	    return obj;
 	}, {});
@@ -76,17 +78,24 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var map = {
+		"./Autocomplete-setup.js": 2,
 		"./Autocomplete.js": 3,
 		"./Basic.js": 4,
+		"./CarMake-setup.js": 5,
 		"./CarMake.js": 6,
 		"./Checkboxes.js": 7,
 		"./Conditional.js": 8,
 		"./Content.js": 9,
+		"./CustomType-setup.js": 10,
 		"./CustomType.js": 11,
+		"./Expression-setup.js": 12,
 		"./Expression.js": 13,
 		"./Hidden.js": 14,
+		"./KitchenSink-setup.js": 15,
 		"./KitchenSink.js": 16,
+		"./ListenerProperty-setup.js": 17,
 		"./ListenerProperty.js": 18,
+		"./Loader-setup.js": 19,
 		"./Loader.js": 20,
 		"./Login.js": 21,
 		"./Modal.js": 22,
@@ -114,7 +123,59 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 2 */,
+/* 2 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Register a fake loader.
+	 * @type {{fetch: Function, format: Function}}
+	 */
+	var fakeAjax = {
+	    fetch: function fetch(url, value, component, cb) {
+	        //You can fire an ajax request here.
+	        var ti = setTimeout(function () {
+	            var ret = [];
+	            for (var i = 0; i < 10 - value.length; i++) {
+	                ret.push({
+	                    val: i,
+	                    label: value + ' ' + i
+	                });
+	            }
+
+	            //callback err, value.
+	            cb(null, ret);
+	        }, 200);
+	        return {
+	            cancel: function cancel() {
+	                //You could abort an AJAX request here.
+	                clearTimeout(ti);
+	            }
+	        };
+	    },
+	    value: function value(obj) {
+	        return obj && obj.val;
+	    },
+	    format: function format(value) {
+	        return value && value.label;
+	    }
+	};
+
+	var fakeLoader = {
+	    loadProcessor: function loadProcessor(name) {
+	        if (name === 'fakeAjax') {
+	            return fakeAjax;
+	        }
+	    },
+	    listProcessors: function listProcessors() {
+	        return [{ name: 'fakeAjax', processor: fakeAjax }];
+	    }
+	};
+
+	loader.addLoader(fakeLoader);
+
+/***/ },
 /* 3 */
 /***/ function(module, exports) {
 
@@ -185,7 +246,92 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 5 */,
+/* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	/**
+	 * Borrowed from react-native docs.
+	 */
+	var CAR_MAKES_AND_MODELS = {
+	    amc: {
+	        name: 'AMC',
+	        models: ['AMX', 'Concord', 'Eagle', 'Gremlin', 'Matador', 'Pacer']
+	    },
+	    alfa: {
+	        name: 'Alfa-Romeo',
+	        models: ['159', '4C', 'Alfasud', 'Brera', 'GTV6', 'Giulia', 'MiTo', 'Spider']
+	    },
+	    aston: {
+	        name: 'Aston Martin',
+	        models: ['DB5', 'DB9', 'DBS', 'Rapide', 'Vanquish', 'Vantage']
+	    },
+	    audi: {
+	        name: 'Audi',
+	        models: ['90', '4000', '5000', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q5', 'Q7']
+	    },
+	    austin: {
+	        name: 'Austin',
+	        models: ['America', 'Maestro', 'Maxi', 'Mini', 'Montego', 'Princess']
+	    },
+	    borgward: {
+	        name: 'Borgward',
+	        models: ['Hansa', 'Isabella', 'P100']
+	    },
+	    buick: {
+	        name: 'Buick',
+	        models: ['Electra', 'LaCrosse', 'LeSabre', 'Park Avenue', 'Regal', 'Roadmaster', 'Skylark']
+	    },
+	    cadillac: {
+	        name: 'Cadillac',
+	        models: ['Catera', 'Cimarron', 'Eldorado', 'Fleetwood', 'Sedan de Ville']
+	    },
+	    chevrolet: {
+	        name: 'Chevrolet',
+	        models: ['Astro', 'Aveo', 'Bel Air', 'Captiva', 'Cavalier', 'Chevelle', 'Corvair', 'Corvette', 'Cruze', 'Nova', 'SS', 'Vega', 'Volt']
+	    }
+	};
+
+	var fields = schema.fieldsets[0].fields;
+	/**
+	 * Create the schema programatically.
+	 */
+	schema.schema.make.options = Object.keys(CAR_MAKES_AND_MODELS).map(function (key) {
+	    fields.push(key);
+	    var _CAR_MAKES_AND_MODELS = CAR_MAKES_AND_MODELS[key];
+	    var name = _CAR_MAKES_AND_MODELS.name;
+	    var models = _CAR_MAKES_AND_MODELS.models;
+	    //setup the key values of them all.
+
+	    schema.schema[key] = {
+	        title: 'Model',
+	        conditional: {
+	            //This is the value to listen to trigger the conditional
+	            listen: 'make',
+	            //This is the value to compare the make's value to
+	            value: key,
+	            //Strict equals operator
+	            operator: '===',
+	            //We want the conditional to update the 'model' path.  This is a bit
+	            // experimental at the time, but may be the future of how to handle these
+	            // situations.
+	            path: 'model'
+	        },
+	        type: 'Select',
+	        placeholder: 'Select a model of ' + name,
+	        options: models
+	    };
+	    /**
+	     * Return the makes
+	     */
+	    return {
+	        label: name,
+	        val: key
+	    };
+	});
+
+/***/ },
 /* 6 */
 /***/ function(module, exports) {
 
@@ -381,7 +527,155 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 10 */,
+/* 10 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class, _class2, _temp2;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Subschema = Subschema;
+	var decorators = _Subschema.decorators;
+	var PropTypes = _Subschema.PropTypes;
+	var tutils = _Subschema.tutils;
+	var provide = decorators.provide;
+	var extend = tutils.extend;
+
+	//This adds it to the loader, loader.addType still works.
+
+	var SwitchButton = (_dec = provide.type, _dec(_class = (_temp2 = _class2 = function (_React$Component) {
+	    _inherits(SwitchButton, _React$Component);
+
+	    function SwitchButton() {
+	        var _Object$getPrototypeO;
+
+	        var _temp, _this, _ret;
+
+	        _classCallCheck(this, SwitchButton);
+
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(SwitchButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleClick = function (e) {
+	            //This updates the valueManager
+	            _this.props.onChange(_this.isChecked(_this.props.value) ? '' : 'on');
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	    //Prevents form-control from being passed to className.
+	    //Values can be (true, 1, '1', 'ON')
+
+	    _createClass(SwitchButton, [{
+	        key: 'isChecked',
+
+	        //In case you have "special" value handling.
+	        value: function isChecked(value) {
+	            return value === true || value === 1 || value === 'on';
+	        }
+
+	        //This is bound to the object instance
+
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var props = this.props;
+	            var isChecked = this.isChecked(props.value);
+
+	            //you prolly won't do it this way, but use classes instead, but the demo platform
+	            // has its limitations.
+	            var container = extend({}, styles.container, isChecked ? styles.on : styles.off);
+	            var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);
+
+	            return React.createElement(
+	                'div',
+	                { className: props.className, style: styles.fieldContainer },
+	                React.createElement(
+	                    'div',
+	                    { style: container, onClick: this.handleClick },
+	                    React.createElement('input', { name: props.name, type: 'hidden', value: this.props.value }),
+	                    isChecked === true ? props.onText : props.offText,
+	                    React.createElement('span', { style: button })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SwitchButton;
+	}(React.Component), _class2.inputClassName = ' ', _class2.propTypes = {
+	    //This tells subschema to not process e.target.value, but just take the value.
+	    onChange: PropTypes.valueEvent,
+	    //Normal React.PropTypes
+	    onText: React.PropTypes.string,
+	    offText: React.PropTypes.string,
+	    value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])]) }, _class2.defaultProps = {
+	    onText: "ON",
+	    offText: "OFF"
+	}, _temp2)) || _class);
+
+	//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.
+
+	var styles = {
+	    fieldContainer: {
+	        display: 'block',
+	        width: '100%',
+	        height: '34px',
+	        padding: '6px 12px',
+	        fontSize: '14px',
+	        lineHeight: '1.42857143',
+	        color: '#555',
+	        backgroundColor: '#fff'
+	    },
+	    container: {
+	        position: 'relative',
+	        borderRadius: "11px",
+	        backgroundColor: '#fff',
+	        border: 'inset 2px',
+	        boxSizing: 'border-box',
+	        display: 'inline-block'
+	    },
+	    on: {
+	        color: 'white',
+	        backgroundColor: 'blue',
+	        paddingLeft: '20px',
+	        paddingRight: '6px'
+
+	    },
+	    off: {
+	        paddingLeft: '6px',
+	        paddingRight: '20px'
+	    },
+	    button: {
+	        top: 2,
+	        display: 'inline-block',
+	        height: '16px',
+	        width: '16px',
+	        boxSizing: 'border-box',
+	        borderRadius: '8px',
+	        border: '5px outset rgba(204, 204, 204, .4)',
+	        position: 'absolute',
+	        transition: 'all .2s'
+
+	    },
+	    buttonOn: {
+	        left: 1,
+	        border: '5px outset rgba(255,255,255,.8)'
+
+	    },
+	    buttonOff: {
+	        left: '100%',
+	        marginLeft: '-18px'
+	    }
+	};
+
+/***/ },
 /* 11 */
 /***/ function(module, exports) {
 
@@ -410,7 +704,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 12 */,
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _temp;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Subschema = Subschema;
+	var PropTypes = _Subschema.PropTypes;
+	var decorators = _Subschema.decorators;
+	var provide = decorators.provide;
+	var type = provide.type;
+
+	var Anchor = type(_class = (_temp = _class2 = function (_React$Component) {
+	    _inherits(Anchor, _React$Component);
+
+	    function Anchor() {
+	        _classCallCheck(this, Anchor);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Anchor).apply(this, arguments));
+	    }
+
+	    _createClass(Anchor, [{
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                'a',
+	                { href: this.props.href },
+	                this.props.label
+	            );
+	        }
+	    }]);
+
+	    return Anchor;
+	}(React.Component), _class2.propTypes = {
+	    //by making this propType an expression it will evaluate it dynamically.
+	    href: PropTypes.expression,
+	    label: PropTypes.expression
+	}, _class2.defaultProps = {
+	    href: '#/{.}'
+	}, _temp)) || _class;
+
+/***/ },
 /* 13 */
 /***/ function(module, exports) {
 
@@ -479,7 +823,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 15 */,
+/* 15 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	loader.listTypes().forEach(function (type) {
+	    schema.schema[type.name] = {
+	        type: type.name,
+	        fieldClass: 'row'
+	    };
+	});
+
+/***/ },
 /* 16 */
 /***/ function(module, exports) {
 
@@ -494,7 +850,66 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 17 */,
+/* 17 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _temp;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	var _Subschema = Subschema;
+	var PropTypes = _Subschema.PropTypes;
+	var decorators = _Subschema.decorators;
+	var types = _Subschema.types;
+	var provide = decorators.provide;
+	var type = provide.type;
+	var Select = types.Select;
+
+	//copy propTypes (don't ref it will break Select)
+
+	var _Select$propTypes = Select.propTypes;
+	var options = _Select$propTypes.options;
+
+	var copyPropTypes = _objectWithoutProperties(_Select$propTypes, ["options"]);
+
+	copyPropTypes.options = PropTypes.listener;
+
+	var SelectListen = type(_class = (_temp = _class2 = function (_React$Component) {
+	    _inherits(SelectListen, _React$Component);
+
+	    function SelectListen() {
+	        _classCallCheck(this, SelectListen);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SelectListen).apply(this, arguments));
+	    }
+
+	    _createClass(SelectListen, [{
+	        key: "render",
+	        value: function render() {
+	            var value = this.props.value;
+	            if (value == null && this.props.options) {
+	                value = this.props.options[0].val;
+	            }
+	            return React.createElement(Select, _extends({}, this.props, { value: value }));
+	        }
+	    }]);
+
+	    return SelectListen;
+	}(React.Component), _class2.propTypes = copyPropTypes, _temp)) || _class;
+
+/***/ },
 /* 18 */
 /***/ function(module, exports) {
 
@@ -543,7 +958,167 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */,
+/* 19 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _class3, _temp, _dec, _class4;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Subschema = Subschema;
+	var types = _Subschema.types;
+	var decorators = _Subschema.decorators;
+	var provide = decorators.provide;
+	var type = provide.type;
+	var template = provide.template;
+	var Select = types.Select;
+	var Checkbox = types.Checkbox;
+	//Provide a template named SimpleTempalte
+
+	var SimpleTemplate = template(_class = function (_React$Component) {
+	    _inherits(SimpleTemplate, _React$Component);
+
+	    function SimpleTemplate() {
+	        _classCallCheck(this, SimpleTemplate);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SimpleTemplate).apply(this, arguments));
+	    }
+
+	    _createClass(SimpleTemplate, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var name = _props.name;
+	            var title = _props.title;
+	            var help = _props.help;
+	            var errorClassName = _props.errorClassName;
+	            var message = _props.message;
+	            var fieldClass = _props.fieldClass;
+	            var children = _props.children;
+
+	            return React.createElement(
+	                'div',
+	                {
+	                    className: "form-group field-name " + (message != null ? errorClassName : '') + ' ' + fieldClass },
+	                React.createElement(
+	                    'div',
+	                    { className: 'col-sm-offset-1 col-sm-10' },
+	                    children,
+	                    React.createElement(
+	                        'p',
+	                        { className: 'help-block', ref: 'help' },
+	                        message || help
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SimpleTemplate;
+	}(React.Component)) || _class;
+	//Provide a type named CheckboxSelect
+
+	var CheckboxSelect = type(_class2 = (_temp = _class3 = function (_React$Component2) {
+	    _inherits(CheckboxSelect, _React$Component2);
+
+	    function CheckboxSelect() {
+	        var _Object$getPrototypeO;
+
+	        _classCallCheck(this, CheckboxSelect);
+
+	        for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+	            rest[_key] = arguments[_key];
+	        }
+
+	        //init state
+
+	        var _this2 = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(CheckboxSelect)).call.apply(_Object$getPrototypeO, [this].concat(rest)));
+
+	        _this2.state = { disabled: false };
+	        return _this2;
+	    }
+
+	    //inline styles, because this is an example
+
+	    //allows for injection of the Select types.
+
+	    _createClass(CheckboxSelect, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this3 = this;
+
+	            return React.createElement(
+	                'div',
+	                null,
+	                React.createElement(Checkbox, { className: '', style: { position: 'absolute', left: '-5px', top: '5px' },
+	                    onChange: function onChange(e) {
+	                        return _this3.setState({ disabled: !e });
+	                    }, checked: !this.state.disabled }),
+	                React.createElement(Select, _extends({}, this.props, { disabled: this.state.disabled }))
+	            );
+	        }
+	    }]);
+
+	    return CheckboxSelect;
+	}(React.Component), _class3.propTypes = Select.propTypes, _temp)) || _class2;
+	//Use a class as a schema, this news the class before adding it.
+
+	var Address = (_dec = provide.schema, _dec(_class4 = function Address() {
+	    _classCallCheck(this, Address);
+
+	    this.schema = {
+	        address: 'Text',
+	        city: 'Text',
+	        state: {
+	            type: 'CheckboxSelect',
+	            options: 'CA,FL,VA,IL'
+	        },
+	        zipCode: {
+	            type: 'Text',
+	            dataType: 'number'
+	        }
+	    };
+	    this.fields = ['address', 'city', 'state', 'zipCode'];
+	}) || _class4);
+	//Adding a schema manually, this can also be done for types, templates,validators, etc...
+
+	loader.addSchema({
+	    Contact: {
+	        schema: {
+	            name: 'Text',
+	            primary: {
+	                type: 'Object',
+	                subSchema: 'Address',
+	                template: 'SimpleTemplate'
+	            },
+	            otherAddresses: {
+	                canEdit: true,
+	                canReorder: true,
+	                canDelete: true,
+	                canAdd: true,
+	                type: 'List',
+	                labelKey: 'address',
+	                itemType: {
+	                    type: 'Object',
+	                    subSchema: 'Address'
+	                }
+	            }
+	        },
+	        fields: ['name', 'primary', 'otherAddresses']
+	    }
+	});
+
+/***/ },
 /* 20 */
 /***/ function(module, exports) {
 
@@ -1253,6 +1828,634 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	module.exports = "const {types, decorators} = Subschema;\nconst {provide} = decorators;\nconst {type, template} = provide;\nconst {Select, Checkbox} = types;\n//Provide a template named SimpleTempalte\n\n@template\nclass SimpleTemplate extends React.Component {\n    render() {\n        var {name, title, help, errorClassName, message, fieldClass, children} = this.props;\n        return (<div\n            className={\"form-group field-name \" + (message != null ? errorClassName : '') + ' ' +  fieldClass}>\n            <div className=\"col-sm-offset-1 col-sm-10\">\n                {children}\n                <p className=\"help-block\" ref=\"help\">{message || help}</p>\n            </div>\n        </div>);\n    }\n}\n//Provide a type named CheckboxSelect\n@type\nclass CheckboxSelect extends React.Component {\n\n    //allows for injection of the Select types.\n    static propTypes = Select.propTypes;\n\n    constructor(...rest) {\n        super(...rest);\n        //init state\n        this.state = {disabled: false};\n    }\n\n    //inline styles, because this is an example\n    render() {\n        return <div>\n            <Checkbox className='' style={{position: 'absolute',  left:'-5px', top:'5px'}}\n                      onChange={(e)=>this.setState({disabled: !e})} checked={!this.state.disabled}/>\n            <Select {...this.props} disabled={this.state.disabled}/>\n        </div>\n    }\n}\n//Use a class as a schema, this news the class before adding it.\n@provide.schema\nclass Address {\n    schema = {\n        address: 'Text',\n        city: 'Text',\n        state: {\n            type: 'CheckboxSelect',\n            options: 'CA,FL,VA,IL'\n        },\n        zipCode: {\n            type: 'Text',\n            dataType: 'number'\n        }\n    };\n    fields = ['address', 'city', 'state', 'zipCode'];\n}\n//Adding a schema manually, this can also be done for types, templates,validators, etc...\nloader.addSchema({\n    Contact: {\n        schema: {\n            name: 'Text',\n            primary: {\n                type: 'Object',\n                subSchema: 'Address',\n                template: 'SimpleTemplate'\n            },\n            otherAddresses: {\n                canEdit: true,\n                canReorder: true,\n                canDelete: true,\n                canAdd: true,\n                type: 'List',\n                labelKey: 'address',\n                itemType: {\n                    type: 'Object',\n                    subSchema: 'Address'\n                }\n            }\n        },\n        fields: ['name', 'primary', 'otherAddresses']\n    }\n});\n"
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var map = {
+		"./Autocomplete-setup.js": 40,
+		"./CarMake-setup.js": 41,
+		"./CustomType-setup.js": 42,
+		"./Expression-setup.js": 43,
+		"./KitchenSink-setup.js": 44,
+		"./ListenerProperty-setup.js": 45,
+		"./Loader-setup.js": 46
+	};
+	function webpackContext(req) {
+		return __webpack_require__(webpackContextResolve(req));
+	};
+	function webpackContextResolve(req) {
+		return map[req] || (function() { throw new Error("Cannot find module '" + req + "'.") }());
+	};
+	webpackContext.keys = function webpackContextKeys() {
+		return Object.keys(map);
+	};
+	webpackContext.resolve = webpackContextResolve;
+	module.exports = webpackContext;
+	webpackContext.id = 39;
+
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        'use strict';
+
+	/**
+	 * Register a fake loader.
+	 * @type {{fetch: Function, format: Function}}
+	 */
+	var fakeAjax = {
+	    fetch: function fetch(url, value, component, cb) {
+	        //You can fire an ajax request here.
+	        var ti = setTimeout(function () {
+	            var ret = [];
+	            for (var i = 0; i < 10 - value.length; i++) {
+	                ret.push({
+	                    val: i,
+	                    label: value + ' ' + i
+	                });
+	            }
+
+	            //callback err, value.
+	            cb(null, ret);
+	        }, 200);
+	        return {
+	            cancel: function cancel() {
+	                //You could abort an AJAX request here.
+	                clearTimeout(ti);
+	            }
+	        };
+	    },
+	    value: function value(obj) {
+	        return obj && obj.val;
+	    },
+	    format: function format(value) {
+	        return value && value.label;
+	    }
+	};
+
+	var fakeLoader = {
+	    loadProcessor: function loadProcessor(name) {
+	        if (name === 'fakeAjax') {
+	            return fakeAjax;
+	        }
+	    },
+	    listProcessors: function listProcessors() {
+	        return [{ name: 'fakeAjax', processor: fakeAjax }];
+	    }
+	};
+
+	loader.addLoader(fakeLoader);
+	    }
+	    
+
+/***/ },
+/* 41 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        'use strict';
+
+	/**
+	 * Borrowed from react-native docs.
+	 */
+	var CAR_MAKES_AND_MODELS = {
+	    amc: {
+	        name: 'AMC',
+	        models: ['AMX', 'Concord', 'Eagle', 'Gremlin', 'Matador', 'Pacer']
+	    },
+	    alfa: {
+	        name: 'Alfa-Romeo',
+	        models: ['159', '4C', 'Alfasud', 'Brera', 'GTV6', 'Giulia', 'MiTo', 'Spider']
+	    },
+	    aston: {
+	        name: 'Aston Martin',
+	        models: ['DB5', 'DB9', 'DBS', 'Rapide', 'Vanquish', 'Vantage']
+	    },
+	    audi: {
+	        name: 'Audi',
+	        models: ['90', '4000', '5000', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'Q5', 'Q7']
+	    },
+	    austin: {
+	        name: 'Austin',
+	        models: ['America', 'Maestro', 'Maxi', 'Mini', 'Montego', 'Princess']
+	    },
+	    borgward: {
+	        name: 'Borgward',
+	        models: ['Hansa', 'Isabella', 'P100']
+	    },
+	    buick: {
+	        name: 'Buick',
+	        models: ['Electra', 'LaCrosse', 'LeSabre', 'Park Avenue', 'Regal', 'Roadmaster', 'Skylark']
+	    },
+	    cadillac: {
+	        name: 'Cadillac',
+	        models: ['Catera', 'Cimarron', 'Eldorado', 'Fleetwood', 'Sedan de Ville']
+	    },
+	    chevrolet: {
+	        name: 'Chevrolet',
+	        models: ['Astro', 'Aveo', 'Bel Air', 'Captiva', 'Cavalier', 'Chevelle', 'Corvair', 'Corvette', 'Cruze', 'Nova', 'SS', 'Vega', 'Volt']
+	    }
+	};
+
+	var fields = schema.fieldsets[0].fields;
+	/**
+	 * Create the schema programatically.
+	 */
+	schema.schema.make.options = Object.keys(CAR_MAKES_AND_MODELS).map(function (key) {
+	    fields.push(key);
+	    var _CAR_MAKES_AND_MODELS = CAR_MAKES_AND_MODELS[key];
+	    var name = _CAR_MAKES_AND_MODELS.name;
+	    var models = _CAR_MAKES_AND_MODELS.models;
+	    //setup the key values of them all.
+
+	    schema.schema[key] = {
+	        title: 'Model',
+	        conditional: {
+	            //This is the value to listen to trigger the conditional
+	            listen: 'make',
+	            //This is the value to compare the make's value to
+	            value: key,
+	            //Strict equals operator
+	            operator: '===',
+	            //We want the conditional to update the 'model' path.  This is a bit
+	            // experimental at the time, but may be the future of how to handle these
+	            // situations.
+	            path: 'model'
+	        },
+	        type: 'Select',
+	        placeholder: 'Select a model of ' + name,
+	        options: models
+	    };
+	    /**
+	     * Return the makes
+	     */
+	    return {
+	        label: name,
+	        val: key
+	    };
+	});
+	    }
+	    
+
+/***/ },
+/* 42 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dec, _class, _class2, _temp2;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Subschema = Subschema;
+	var decorators = _Subschema.decorators;
+	var PropTypes = _Subschema.PropTypes;
+	var tutils = _Subschema.tutils;
+	var provide = decorators.provide;
+	var extend = tutils.extend;
+
+	//This adds it to the loader, loader.addType still works.
+
+	var SwitchButton = (_dec = provide.type, _dec(_class = (_temp2 = _class2 = function (_React$Component) {
+	    _inherits(SwitchButton, _React$Component);
+
+	    function SwitchButton() {
+	        var _Object$getPrototypeO;
+
+	        var _temp, _this, _ret;
+
+	        _classCallCheck(this, SwitchButton);
+
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	            args[_key] = arguments[_key];
+	        }
+
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(SwitchButton)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleClick = function (e) {
+	            //This updates the valueManager
+	            _this.props.onChange(_this.isChecked(_this.props.value) ? '' : 'on');
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
+	    }
+	    //Prevents form-control from being passed to className.
+	    //Values can be (true, 1, '1', 'ON')
+
+	    _createClass(SwitchButton, [{
+	        key: 'isChecked',
+
+	        //In case you have "special" value handling.
+	        value: function isChecked(value) {
+	            return value === true || value === 1 || value === 'on';
+	        }
+
+	        //This is bound to the object instance
+
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            var props = this.props;
+	            var isChecked = this.isChecked(props.value);
+
+	            //you prolly won't do it this way, but use classes instead, but the demo platform
+	            // has its limitations.
+	            var container = extend({}, styles.container, isChecked ? styles.on : styles.off);
+	            var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);
+
+	            return React.createElement(
+	                'div',
+	                { className: props.className, style: styles.fieldContainer },
+	                React.createElement(
+	                    'div',
+	                    { style: container, onClick: this.handleClick },
+	                    React.createElement('input', { name: props.name, type: 'hidden', value: this.props.value }),
+	                    isChecked === true ? props.onText : props.offText,
+	                    React.createElement('span', { style: button })
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SwitchButton;
+	}(React.Component), _class2.inputClassName = ' ', _class2.propTypes = {
+	    //This tells subschema to not process e.target.value, but just take the value.
+	    onChange: PropTypes.valueEvent,
+	    //Normal React.PropTypes
+	    onText: React.PropTypes.string,
+	    offText: React.PropTypes.string,
+	    value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])]) }, _class2.defaultProps = {
+	    onText: "ON",
+	    offText: "OFF"
+	}, _temp2)) || _class);
+
+	//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.
+
+	var styles = {
+	    fieldContainer: {
+	        display: 'block',
+	        width: '100%',
+	        height: '34px',
+	        padding: '6px 12px',
+	        fontSize: '14px',
+	        lineHeight: '1.42857143',
+	        color: '#555',
+	        backgroundColor: '#fff'
+	    },
+	    container: {
+	        position: 'relative',
+	        borderRadius: "11px",
+	        backgroundColor: '#fff',
+	        border: 'inset 2px',
+	        boxSizing: 'border-box',
+	        display: 'inline-block'
+	    },
+	    on: {
+	        color: 'white',
+	        backgroundColor: 'blue',
+	        paddingLeft: '20px',
+	        paddingRight: '6px'
+
+	    },
+	    off: {
+	        paddingLeft: '6px',
+	        paddingRight: '20px'
+	    },
+	    button: {
+	        top: 2,
+	        display: 'inline-block',
+	        height: '16px',
+	        width: '16px',
+	        boxSizing: 'border-box',
+	        borderRadius: '8px',
+	        border: '5px outset rgba(204, 204, 204, .4)',
+	        position: 'absolute',
+	        transition: 'all .2s'
+
+	    },
+	    buttonOn: {
+	        left: 1,
+	        border: '5px outset rgba(255,255,255,.8)'
+
+	    },
+	    buttonOff: {
+	        left: '100%',
+	        marginLeft: '-18px'
+	    }
+	};
+	    }
+	    
+
+/***/ },
+/* 43 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _temp;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Subschema = Subschema;
+	var PropTypes = _Subschema.PropTypes;
+	var decorators = _Subschema.decorators;
+	var provide = decorators.provide;
+	var type = provide.type;
+
+	var Anchor = type(_class = (_temp = _class2 = function (_React$Component) {
+	    _inherits(Anchor, _React$Component);
+
+	    function Anchor() {
+	        _classCallCheck(this, Anchor);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Anchor).apply(this, arguments));
+	    }
+
+	    _createClass(Anchor, [{
+	        key: 'render',
+	        value: function render() {
+	            return React.createElement(
+	                'a',
+	                { href: this.props.href },
+	                this.props.label
+	            );
+	        }
+	    }]);
+
+	    return Anchor;
+	}(React.Component), _class2.propTypes = {
+	    //by making this propType an expression it will evaluate it dynamically.
+	    href: PropTypes.expression,
+	    label: PropTypes.expression
+	}, _class2.defaultProps = {
+	    href: '#/{.}'
+	}, _temp)) || _class;
+	    }
+	    
+
+/***/ },
+/* 44 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        'use strict';
+
+	loader.listTypes().forEach(function (type) {
+	    schema.schema[type.name] = {
+	        type: type.name,
+	        fieldClass: 'row'
+	    };
+	});
+	    }
+	    
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        "use strict";
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _temp;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+	var _Subschema = Subschema;
+	var PropTypes = _Subschema.PropTypes;
+	var decorators = _Subschema.decorators;
+	var types = _Subschema.types;
+	var provide = decorators.provide;
+	var type = provide.type;
+	var Select = types.Select;
+
+	//copy propTypes (don't ref it will break Select)
+
+	var _Select$propTypes = Select.propTypes;
+	var options = _Select$propTypes.options;
+
+	var copyPropTypes = _objectWithoutProperties(_Select$propTypes, ["options"]);
+
+	copyPropTypes.options = PropTypes.listener;
+
+	var SelectListen = type(_class = (_temp = _class2 = function (_React$Component) {
+	    _inherits(SelectListen, _React$Component);
+
+	    function SelectListen() {
+	        _classCallCheck(this, SelectListen);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SelectListen).apply(this, arguments));
+	    }
+
+	    _createClass(SelectListen, [{
+	        key: "render",
+	        value: function render() {
+	            var value = this.props.value;
+	            if (value == null && this.props.options) {
+	                value = this.props.options[0].val;
+	            }
+	            return React.createElement(Select, _extends({}, this.props, { value: value }));
+	        }
+	    }]);
+
+	    return SelectListen;
+	}(React.Component), _class2.propTypes = copyPropTypes, _temp)) || _class;
+	    }
+	    
+
+/***/ },
+/* 46 */
+/***/ function(module, exports) {
+
+	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+	    //---injected content here--
+	        'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _class3, _temp, _dec, _class4;
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _Subschema = Subschema;
+	var types = _Subschema.types;
+	var decorators = _Subschema.decorators;
+	var provide = decorators.provide;
+	var type = provide.type;
+	var template = provide.template;
+	var Select = types.Select;
+	var Checkbox = types.Checkbox;
+	//Provide a template named SimpleTempalte
+
+	var SimpleTemplate = template(_class = function (_React$Component) {
+	    _inherits(SimpleTemplate, _React$Component);
+
+	    function SimpleTemplate() {
+	        _classCallCheck(this, SimpleTemplate);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(SimpleTemplate).apply(this, arguments));
+	    }
+
+	    _createClass(SimpleTemplate, [{
+	        key: 'render',
+	        value: function render() {
+	            var _props = this.props;
+	            var name = _props.name;
+	            var title = _props.title;
+	            var help = _props.help;
+	            var errorClassName = _props.errorClassName;
+	            var message = _props.message;
+	            var fieldClass = _props.fieldClass;
+	            var children = _props.children;
+
+	            return React.createElement(
+	                'div',
+	                {
+	                    className: "form-group field-name " + (message != null ? errorClassName : '') + ' ' + fieldClass },
+	                React.createElement(
+	                    'div',
+	                    { className: 'col-sm-offset-1 col-sm-10' },
+	                    children,
+	                    React.createElement(
+	                        'p',
+	                        { className: 'help-block', ref: 'help' },
+	                        message || help
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return SimpleTemplate;
+	}(React.Component)) || _class;
+	//Provide a type named CheckboxSelect
+
+	var CheckboxSelect = type(_class2 = (_temp = _class3 = function (_React$Component2) {
+	    _inherits(CheckboxSelect, _React$Component2);
+
+	    function CheckboxSelect() {
+	        var _Object$getPrototypeO;
+
+	        _classCallCheck(this, CheckboxSelect);
+
+	        for (var _len = arguments.length, rest = Array(_len), _key = 0; _key < _len; _key++) {
+	            rest[_key] = arguments[_key];
+	        }
+
+	        //init state
+
+	        var _this2 = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(CheckboxSelect)).call.apply(_Object$getPrototypeO, [this].concat(rest)));
+
+	        _this2.state = { disabled: false };
+	        return _this2;
+	    }
+
+	    //inline styles, because this is an example
+
+	    //allows for injection of the Select types.
+
+	    _createClass(CheckboxSelect, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this3 = this;
+
+	            return React.createElement(
+	                'div',
+	                null,
+	                React.createElement(Checkbox, { className: '', style: { position: 'absolute', left: '-5px', top: '5px' },
+	                    onChange: function onChange(e) {
+	                        return _this3.setState({ disabled: !e });
+	                    }, checked: !this.state.disabled }),
+	                React.createElement(Select, _extends({}, this.props, { disabled: this.state.disabled }))
+	            );
+	        }
+	    }]);
+
+	    return CheckboxSelect;
+	}(React.Component), _class3.propTypes = Select.propTypes, _temp)) || _class2;
+	//Use a class as a schema, this news the class before adding it.
+
+	var Address = (_dec = provide.schema, _dec(_class4 = function Address() {
+	    _classCallCheck(this, Address);
+
+	    this.schema = {
+	        address: 'Text',
+	        city: 'Text',
+	        state: {
+	            type: 'CheckboxSelect',
+	            options: 'CA,FL,VA,IL'
+	        },
+	        zipCode: {
+	            type: 'Text',
+	            dataType: 'number'
+	        }
+	    };
+	    this.fields = ['address', 'city', 'state', 'zipCode'];
+	}) || _class4);
+	//Adding a schema manually, this can also be done for types, templates,validators, etc...
+
+	loader.addSchema({
+	    Contact: {
+	        schema: {
+	            name: 'Text',
+	            primary: {
+	                type: 'Object',
+	                subSchema: 'Address',
+	                template: 'SimpleTemplate'
+	            },
+	            otherAddresses: {
+	                canEdit: true,
+	                canReorder: true,
+	                canDelete: true,
+	                canAdd: true,
+	                type: 'List',
+	                labelKey: 'address',
+	                itemType: {
+	                    type: 'Object',
+	                    subSchema: 'Address'
+	                }
+	            }
+	        },
+	        fields: ['name', 'primary', 'otherAddresses']
+	    }
+	});
+	    }
+	    
 
 /***/ }
 /******/ ])

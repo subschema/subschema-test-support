@@ -1,3 +1,7 @@
 module.exports = function (content) {
-    return  'module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){\n//---injected content here--\n'+content+'\n}'
+    return  `module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
+    //---injected content here--
+        ${content}
+    }
+    `;
 }
