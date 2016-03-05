@@ -1,6 +1,6 @@
-module.exports ={
-    data:{
-        'phoneOrEmail':'phone'
+module.exports = {
+    data: {
+        'phoneOrEmail': 'phone'
     },
     description: 'Shows how you can use Transitions on fieldsets',
     schema: {
@@ -11,11 +11,7 @@ module.exports ={
                 options: [{label: "Phone", val: "phone"}, {label: "Email", val: "email"}],
             },
             "phone": {
-                "type": "Text",
-                "template": {
-                    template: "SpecialTemplate",
-                    className: "on"
-                }
+                "type": "Text"
             },
             "canWePhone": "Checkbox",
             "canWeEmail": "Checkbox",
