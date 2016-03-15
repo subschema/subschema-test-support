@@ -530,7 +530,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 10 */
 /***/ function(module, exports) {
 
-	'use strict';
+	"use strict";
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -571,10 +571,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    //Prevents form-control from being passed to className.
-	    //Values can be (true, 1, '1', 'ON')
 
 	    _createClass(SwitchButton, [{
-	        key: 'isChecked',
+	        key: "isChecked",
 
 	        //In case you have "special" value handling.
 	        value: function isChecked(value) {
@@ -584,7 +583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //This is bound to the object instance
 
 	    }, {
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
 	            var props = this.props;
 	            var isChecked = this.isChecked(props.value);
@@ -595,14 +594,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);
 
 	            return React.createElement(
-	                'div',
+	                "div",
 	                { className: props.className, style: styles.fieldContainer },
 	                React.createElement(
-	                    'div',
+	                    "div",
 	                    { style: container, onClick: this.handleClick },
-	                    React.createElement('input', { name: props.name, type: 'hidden', value: this.props.value }),
+	                    React.createElement("input", { name: props.name, type: "hidden", value: this.props.value }),
 	                    isChecked === true ? props.onText : props.offText,
-	                    React.createElement('span', { style: button })
+	                    React.createElement("span", { style: button })
 	                )
 	            );
 	        }
@@ -614,8 +613,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onChange: PropTypes.valueEvent,
 	    //Normal React.PropTypes
 	    onText: React.PropTypes.string,
-	    offText: React.PropTypes.string,
-	    value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])]) }, _class2.defaultProps = {
+	    offText: React.PropTypes.string
+	}, _class2.defaultProps = {
 	    onText: "ON",
 	    offText: "OFF"
 	}, _temp2)) || _class);
@@ -639,7 +638,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        backgroundColor: '#fff',
 	        border: 'inset 2px',
 	        boxSizing: 'border-box',
-	        display: 'inline-block'
+	        display: 'inline-block',
+	        cursor: 'pointer',
+	        transition: 'background .5s ease-in-out'
 	    },
 	    on: {
 	        color: 'white',
@@ -659,15 +660,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        width: '16px',
 	        boxSizing: 'border-box',
 	        borderRadius: '8px',
-	        border: '5px outset rgba(204, 204, 204, .4)',
+	        border: '5px inset rgba(204, 204, 204, .4)',
+	        transform: 'rotate(180deg)',
 	        position: 'absolute',
-	        transition: 'all .2s'
+	        transition: 'all .4s'
 
 	    },
 	    buttonOn: {
 	        left: 1,
-	        border: '5px outset rgba(255,255,255,.8)'
-
+	        transform: 'rotate(10deg)'
 	    },
 	    buttonOff: {
 	        left: '100%',
@@ -1803,7 +1804,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 34 */
 /***/ function(module, exports) {
 
-	module.exports = "const {decorators, PropTypes, tutils} = Subschema;\nconst {provide} = decorators;\nconst {extend} = tutils;\n\n//This adds it to the loader, loader.addType still works.\n@provide.type\nclass SwitchButton extends React.Component {\n    //Prevents form-control from being passed to className.\n    static inputClassName = ' ';\n\n    static propTypes = {\n        //This tells subschema to not process e.target.value, but just take the value.\n        onChange: PropTypes.valueEvent,\n        //Normal React.PropTypes\n        onText: React.PropTypes.string,\n        offText: React.PropTypes.string,\n        value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])])   //Values can be (true, 1, '1', 'ON')\n    };\n\n    static defaultProps = {\n        onText: \"ON\",\n        offText: \"OFF\"\n    };\n\n    //In case you have \"special\" value handling.\n    isChecked(value) {\n        return value === true || value === 1 || value === 'on';\n    }\n\n    //This is bound to the object instance\n    handleClick = (e)=> {\n        //This updates the valueManager\n        this.props.onChange(this.isChecked(this.props.value) ? '' : 'on');\n    };\n\n    render() {\n        var props = this.props;\n        var isChecked = this.isChecked(props.value);\n\n        //you prolly won't do it this way, but use classes instead, but the demo platform\n        // has its limitations.\n        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);\n        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);\n\n        return <div className={props.className} style={styles.fieldContainer}>\n            <div style={container} onClick={this.handleClick}>\n                <input name={props.name} type=\"hidden\" value={this.props.value}/>\n                {isChecked === true ? props.onText : props.offText}\n                <span style={button}/>\n            </div>\n        </div>\n    }\n\n}\n\n//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.\nvar styles = {\n    fieldContainer: {\n        display: 'block',\n        width: '100%',\n        height: '34px',\n        padding: '6px 12px',\n        fontSize: '14px',\n        lineHeight: '1.42857143',\n        color: '#555',\n        backgroundColor: '#fff'\n    },\n    container: {\n        position: 'relative',\n        borderRadius: \"11px\",\n        backgroundColor: '#fff',\n        border: 'inset 2px',\n        boxSizing: 'border-box',\n        display: 'inline-block'\n    },\n    on: {\n        color: 'white',\n        backgroundColor: 'blue',\n        paddingLeft: '20px',\n        paddingRight: '6px',\n\n    },\n    off: {\n        paddingLeft: '6px',\n        paddingRight: '20px'\n    },\n    button: {\n        top: 2,\n        display: 'inline-block',\n        height: '16px',\n        width: '16px',\n        boxSizing: 'border-box',\n        borderRadius: '8px',\n        border: '5px outset rgba(204, 204, 204, .4)',\n        position: 'absolute',\n        transition: 'all .2s',\n\n    },\n    buttonOn: {\n        left: 1,\n        border:'5px outset rgba(255,255,255,.8)'\n\n    },\n    buttonOff: {\n        left: '100%',\n        marginLeft: '-18px',\n    }\n};\n"
+	module.exports = "const {decorators, PropTypes, tutils} = Subschema;\nconst {provide} = decorators;\nconst {extend} = tutils;\n\n//This adds it to the loader, loader.addType still works.\n@provide.type\nclass SwitchButton extends React.Component {\n    //Prevents form-control from being passed to className.\n    static inputClassName = ' ';\n\n    static propTypes = {\n        //This tells subschema to not process e.target.value, but just take the value.\n        onChange: PropTypes.valueEvent,\n        //Normal React.PropTypes\n        onText: React.PropTypes.string,\n        offText: React.PropTypes.string\n    };\n\n    static defaultProps = {\n        onText: \"ON\",\n        offText: \"OFF\"\n    };\n\n    //In case you have \"special\" value handling.\n    isChecked(value) {\n        return value === true || value === 1 || value === 'on';\n    }\n\n    //This is bound to the object instance\n    handleClick = (e)=> {\n        //This updates the valueManager\n        this.props.onChange(this.isChecked(this.props.value) ? '' : 'on');\n    };\n\n    render() {\n        var props = this.props;\n        var isChecked = this.isChecked(props.value);\n\n        //you prolly won't do it this way, but use classes instead, but the demo platform\n        // has its limitations.\n        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);\n        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);\n\n        return <div className={props.className} style={styles.fieldContainer}>\n            <div style={container} onClick={this.handleClick}>\n                <input name={props.name} type=\"hidden\" value={this.props.value}/>\n                {isChecked === true ? props.onText : props.offText}\n                <span style={button}/>\n            </div>\n        </div>\n    }\n\n}\n\n//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.\nvar styles = {\n    fieldContainer: {\n        display: 'block',\n        width: '100%',\n        height: '34px',\n        padding: '6px 12px',\n        fontSize: '14px',\n        lineHeight: '1.42857143',\n        color: '#555',\n        backgroundColor: '#fff'\n    },\n    container: {\n        position: 'relative',\n        borderRadius: \"11px\",\n        backgroundColor: '#fff',\n        border: 'inset 2px',\n        boxSizing: 'border-box',\n        display: 'inline-block',\n        cursor: 'pointer',\n        transition:'background .5s ease-in-out'\n    },\n    on: {\n        color: 'white',\n        backgroundColor: 'blue',\n        paddingLeft: '20px',\n        paddingRight: '6px',\n\n    },\n    off: {\n        paddingLeft: '6px',\n        paddingRight: '20px'\n    },\n    button: {\n        top: 2,\n        display: 'inline-block',\n        height: '16px',\n        width: '16px',\n        boxSizing: 'border-box',\n        borderRadius: '8px',\n        border: '5px inset rgba(204, 204, 204, .4)',\n        transform:'rotate(180deg)',\n        position: 'absolute',\n        transition: 'all .4s',\n\n    },\n    buttonOn: {\n        left: 1,\n        transform:'rotate(10deg)',\n    },\n    buttonOff: {\n        left: '100%',\n        marginLeft: '-18px',\n    }\n};\n"
 
 /***/ },
 /* 35 */
@@ -2009,7 +2010,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
 	    //---injected content here--
-	        'use strict';
+	        "use strict";
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -2050,10 +2051,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	    }
 	    //Prevents form-control from being passed to className.
-	    //Values can be (true, 1, '1', 'ON')
 
 	    _createClass(SwitchButton, [{
-	        key: 'isChecked',
+	        key: "isChecked",
 
 	        //In case you have "special" value handling.
 	        value: function isChecked(value) {
@@ -2063,7 +2063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //This is bound to the object instance
 
 	    }, {
-	        key: 'render',
+	        key: "render",
 	        value: function render() {
 	            var props = this.props;
 	            var isChecked = this.isChecked(props.value);
@@ -2074,14 +2074,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);
 
 	            return React.createElement(
-	                'div',
+	                "div",
 	                { className: props.className, style: styles.fieldContainer },
 	                React.createElement(
-	                    'div',
+	                    "div",
 	                    { style: container, onClick: this.handleClick },
-	                    React.createElement('input', { name: props.name, type: 'hidden', value: this.props.value }),
+	                    React.createElement("input", { name: props.name, type: "hidden", value: this.props.value }),
 	                    isChecked === true ? props.onText : props.offText,
-	                    React.createElement('span', { style: button })
+	                    React.createElement("span", { style: button })
 	                )
 	            );
 	        }
@@ -2093,8 +2093,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    onChange: PropTypes.valueEvent,
 	    //Normal React.PropTypes
 	    onText: React.PropTypes.string,
-	    offText: React.PropTypes.string,
-	    value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])]) }, _class2.defaultProps = {
+	    offText: React.PropTypes.string
+	}, _class2.defaultProps = {
 	    onText: "ON",
 	    offText: "OFF"
 	}, _temp2)) || _class);
@@ -2118,7 +2118,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        backgroundColor: '#fff',
 	        border: 'inset 2px',
 	        boxSizing: 'border-box',
-	        display: 'inline-block'
+	        display: 'inline-block',
+	        cursor: 'pointer',
+	        transition: 'background .5s ease-in-out'
 	    },
 	    on: {
 	        color: 'white',
@@ -2138,15 +2140,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        width: '16px',
 	        boxSizing: 'border-box',
 	        borderRadius: '8px',
-	        border: '5px outset rgba(204, 204, 204, .4)',
+	        border: '5px inset rgba(204, 204, 204, .4)',
+	        transform: 'rotate(180deg)',
 	        position: 'absolute',
-	        transition: 'all .2s'
+	        transition: 'all .4s'
 
 	    },
 	    buttonOn: {
 	        left: 1,
-	        border: '5px outset rgba(255,255,255,.8)'
-
+	        transform: 'rotate(10deg)'
 	    },
 	    buttonOff: {
 	        left: '100%',

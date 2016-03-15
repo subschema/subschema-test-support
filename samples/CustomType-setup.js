@@ -13,8 +13,7 @@ class SwitchButton extends React.Component {
         onChange: PropTypes.valueEvent,
         //Normal React.PropTypes
         onText: React.PropTypes.string,
-        offText: React.PropTypes.string,
-        value: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.oneOf(['on', 'off', 0, 1])])   //Values can be (true, 1, '1', 'ON')
+        offText: React.PropTypes.string
     };
 
     static defaultProps = {
@@ -71,7 +70,9 @@ var styles = {
         backgroundColor: '#fff',
         border: 'inset 2px',
         boxSizing: 'border-box',
-        display: 'inline-block'
+        display: 'inline-block',
+        cursor: 'pointer',
+        transition:'background .5s ease-in-out'
     },
     on: {
         color: 'white',
@@ -91,15 +92,15 @@ var styles = {
         width: '16px',
         boxSizing: 'border-box',
         borderRadius: '8px',
-        border: '5px outset rgba(204, 204, 204, .4)',
+        border: '5px inset rgba(204, 204, 204, .4)',
+        transform:'rotate(180deg)',
         position: 'absolute',
-        transition: 'all .2s',
+        transition: 'all .4s',
 
     },
     buttonOn: {
         left: 1,
-        border:'5px outset rgba(255,255,255,.8)'
-
+        transform:'rotate(10deg)',
     },
     buttonOff: {
         left: '100%',
