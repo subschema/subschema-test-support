@@ -572,8 +572,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    //Prevents form-control from being passed to className.
 
+
 	    _createClass(SwitchButton, [{
 	        key: "isChecked",
+
 
 	        //In case you have "special" value handling.
 	        value: function isChecked(value) {
@@ -1029,6 +1031,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(React.Component)) || _class;
 	//Provide a type named CheckboxSelect
 
+
 	var CheckboxSelect = type(_class2 = (_temp = _class3 = function (_React$Component2) {
 	    _inherits(CheckboxSelect, _React$Component2);
 
@@ -1051,7 +1054,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    //inline styles, because this is an example
 
+
 	    //allows for injection of the Select types.
+
 
 	    _createClass(CheckboxSelect, [{
 	        key: 'render',
@@ -1073,6 +1078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return CheckboxSelect;
 	}(React.Component), _class3.propTypes = Select.propTypes, _temp)) || _class2;
 	//Use a class as a schema, this news the class before adding it.
+
 
 	var Address = (_dec = provide.schema, _dec(_class4 = function Address() {
 	    _classCallCheck(this, Address);
@@ -2052,8 +2058,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    //Prevents form-control from being passed to className.
 
+
 	    _createClass(SwitchButton, [{
 	        key: "isChecked",
+
 
 	        //In case you have "special" value handling.
 	        value: function isChecked(value) {
@@ -2367,6 +2375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(React.Component)) || _class;
 	//Provide a type named CheckboxSelect
 
+
 	var CheckboxSelect = type(_class2 = (_temp = _class3 = function (_React$Component2) {
 	    _inherits(CheckboxSelect, _React$Component2);
 
@@ -2389,7 +2398,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    //inline styles, because this is an example
 
+
 	    //allows for injection of the Select types.
+
 
 	    _createClass(CheckboxSelect, [{
 	        key: 'render',
@@ -2411,6 +2422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return CheckboxSelect;
 	}(React.Component), _class3.propTypes = Select.propTypes, _temp)) || _class2;
 	//Use a class as a schema, this news the class before adding it.
+
 
 	var Address = (_dec = provide.schema, _dec(_class4 = function Address() {
 	    _classCallCheck(this, Address);
