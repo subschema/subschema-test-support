@@ -3,4 +3,5 @@
 node_modules
 lib
 samples.js
+npm-debug.log*
 
