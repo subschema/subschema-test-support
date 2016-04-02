@@ -14,6 +14,7 @@ module.exports = {
                 buttons: [{
                     label: 'Cancel',
                     action: 'cancel',
+                    type:'reset',
                     buttonClass: 'btn'
                 }, {
                     label: 'Submit', action: 'submit',
