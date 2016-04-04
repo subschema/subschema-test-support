@@ -41,4 +41,4 @@ module.exports = {
         ]
     },
     setupFile: 'ListenerProperty-setup.js'
-}
+};

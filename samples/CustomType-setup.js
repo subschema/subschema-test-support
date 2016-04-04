@@ -1,9 +1,7 @@
-const {decorators, PropTypes, tutils} = Subschema;
-const {provide} = decorators;
+const {loader, PropTypes, tutils} = Subschema;
 const {extend} = tutils;
 
 //This adds it to the loader, loader.addType still works.
-@provide.type
 class SwitchButton extends React.Component {
     //Prevents form-control from being passed to className.
     static inputClassName = ' ';
@@ -51,7 +49,7 @@ class SwitchButton extends React.Component {
     }
 
 }
-
+loader.addType('SwitchButton', SwitchButton);
 //Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.
 var styles = {
     fieldContainer: {
