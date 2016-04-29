@@ -1,5 +1,4 @@
-const {loader, PropTypes, tutils} = Subschema;
-const {extend} = tutils;
+const {loader, PropTypes} = Subschema;
 
 //This adds it to the loader, loader.addType still works.
 class SwitchButton extends React.Component {
@@ -36,8 +35,8 @@ class SwitchButton extends React.Component {
 
         //you prolly won't do it this way, but use classes instead, but the demo platform
         // has its limitations.
-        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);
-        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);
+        var container = Object.assign({}, styles.container, isChecked ? styles.on : styles.off);
+        var button = Object.assign({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);
 
         return <div className={props.className} style={styles.fieldContainer}>
             <div style={container} onClick={this.handleClick}>
