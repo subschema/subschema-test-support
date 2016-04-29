@@ -226,6 +226,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            buttons: [{
 	                label: 'Cancel',
 	                action: 'cancel',
+	                type: 'reset',
 	                buttonClass: 'btn'
 	            }, {
 	                label: 'Submit', action: 'submit',
@@ -534,7 +535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _dec, _class, _class2, _temp2;
+	var _class, _temp2;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -543,15 +544,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _Subschema = Subschema;
-	var decorators = _Subschema.decorators;
+	var loader = _Subschema.loader;
 	var PropTypes = _Subschema.PropTypes;
 	var tutils = _Subschema.tutils;
-	var provide = decorators.provide;
 	var extend = tutils.extend;
 
 	//This adds it to the loader, loader.addType still works.
 
-	var SwitchButton = (_dec = provide.type, _dec(_class = (_temp2 = _class2 = function (_React$Component) {
+	var SwitchButton = (_temp2 = _class = function (_React$Component) {
 	    _inherits(SwitchButton, _React$Component);
 
 	    function SwitchButton() {
@@ -610,16 +610,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return SwitchButton;
-	}(React.Component), _class2.inputClassName = ' ', _class2.propTypes = {
+	}(React.Component), _class.inputClassName = ' ', _class.propTypes = {
 	    //This tells subschema to not process e.target.value, but just take the value.
 	    onChange: PropTypes.valueEvent,
 	    //Normal React.PropTypes
 	    onText: React.PropTypes.string,
 	    offText: React.PropTypes.string
-	}, _class2.defaultProps = {
+	}, _class.defaultProps = {
 	    onText: "ON",
 	    offText: "OFF"
-	}, _temp2)) || _class);
+	}, _temp2);
 
 	//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.
 
@@ -677,6 +677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        marginLeft: '-18px'
 	    }
 	};
+	loader.addType('SwitchButton', SwitchButton);
 
 /***/ },
 /* 11 */
@@ -714,7 +715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _class, _class2, _temp;
+	var _class, _temp;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -724,11 +725,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Subschema = Subschema;
 	var PropTypes = _Subschema.PropTypes;
-	var decorators = _Subschema.decorators;
-	var provide = decorators.provide;
-	var type = provide.type;
-
-	var Anchor = type(_class = (_temp = _class2 = function (_React$Component) {
+	var loader = _Subschema.loader;
+	var Anchor = (_temp = _class = function (_React$Component) {
 	    _inherits(Anchor, _React$Component);
 
 	    function Anchor() {
@@ -749,13 +747,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return Anchor;
-	}(React.Component), _class2.propTypes = {
+	}(React.Component), _class.propTypes = {
 	    //by making this propType an expression it will evaluate it dynamically.
 	    href: PropTypes.expression,
 	    label: PropTypes.expression
-	}, _class2.defaultProps = {
+	}, _class.defaultProps = {
 	    href: '#/{.}'
-	}, _temp)) || _class;
+	}, _temp);
+
+	loader.addType({ Anchor: Anchor });
 
 /***/ },
 /* 13 */
@@ -856,13 +856,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 17 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _class, _class2, _temp;
+	var _class, _temp;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -874,10 +874,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Subschema = Subschema;
 	var PropTypes = _Subschema.PropTypes;
-	var decorators = _Subschema.decorators;
+	var loader = _Subschema.loader;
 	var types = _Subschema.types;
-	var provide = decorators.provide;
-	var type = provide.type;
 	var Select = types.Select;
 
 	//copy propTypes (don't ref it will break Select)
@@ -885,11 +883,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Select$propTypes = Select.propTypes;
 	var options = _Select$propTypes.options;
 
-	var copyPropTypes = _objectWithoutProperties(_Select$propTypes, ["options"]);
+	var copyPropTypes = _objectWithoutProperties(_Select$propTypes, ['options']);
 
 	copyPropTypes.options = PropTypes.listener;
 
-	var SelectListen = type(_class = (_temp = _class2 = function (_React$Component) {
+	var SelectListen = (_temp = _class = function (_React$Component) {
 	    _inherits(SelectListen, _React$Component);
 
 	    function SelectListen() {
@@ -899,7 +897,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(SelectListen, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var value = this.props.value;
 	            if (value == null && this.props.options) {
@@ -910,7 +908,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return SelectListen;
-	}(React.Component), _class2.propTypes = copyPropTypes, _temp)) || _class;
+	}(React.Component), _class.propTypes = copyPropTypes, _temp);
+
+
+	loader.addType('SelectListen', SelectListen);
 
 /***/ },
 /* 18 */
@@ -968,9 +969,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _class, _temp;
 
-	var _class, _class2, _class3, _temp, _dec, _class4;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -980,15 +981,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Subschema = Subschema;
 	var types = _Subschema.types;
+	var loader = _Subschema.loader;
 	var decorators = _Subschema.decorators;
-	var provide = decorators.provide;
-	var type = provide.type;
-	var template = provide.template;
 	var Select = types.Select;
 	var Checkbox = types.Checkbox;
 	//Provide a template named SimpleTempalte
 
-	var SimpleTemplate = template(_class = function (_React$Component) {
+	var SimpleTemplate = function (_React$Component) {
 	    _inherits(SimpleTemplate, _React$Component);
 
 	    function SimpleTemplate() {
@@ -1028,11 +1027,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return SimpleTemplate;
-	}(React.Component)) || _class;
+	}(React.Component);
+
+	loader.addType('SimpleTemplate', SimpleTemplate);
 	//Provide a type named CheckboxSelect
 
-
-	var CheckboxSelect = type(_class2 = (_temp = _class3 = function (_React$Component2) {
+	var CheckboxSelect = (_temp = _class = function (_React$Component2) {
 	    _inherits(CheckboxSelect, _React$Component2);
 
 	    function CheckboxSelect() {
@@ -1076,11 +1076,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return CheckboxSelect;
-	}(React.Component), _class3.propTypes = Select.propTypes, _temp)) || _class2;
-	//Use a class as a schema, this news the class before adding it.
+	}(React.Component), _class.propTypes = Select.propTypes, _temp);
 
+	loader.addType('CheckboxSelect', CheckboxSelect);
 
-	var Address = (_dec = provide.schema, _dec(_class4 = function Address() {
+	var Address = function Address() {
 	    _classCallCheck(this, Address);
 
 	    this.schema = {
@@ -1096,9 +1096,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    };
 	    this.fields = ['address', 'city', 'state', 'zipCode'];
-	}) || _class4);
-	//Adding a schema manually, this can also be done for types, templates,validators, etc...
+	};
 
+	loader.addSchema('Address', Address);
+	//Adding a schema manually, this can also be done for types, templates,validators, etc...
 	loader.addSchema({
 	    Contact: {
 	        schema: {
@@ -1810,13 +1811,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 34 */
 /***/ function(module, exports) {
 
-	module.exports = "const {decorators, PropTypes, tutils} = Subschema;\nconst {provide} = decorators;\nconst {extend} = tutils;\n\n//This adds it to the loader, loader.addType still works.\n@provide.type\nclass SwitchButton extends React.Component {\n    //Prevents form-control from being passed to className.\n    static inputClassName = ' ';\n\n    static propTypes = {\n        //This tells subschema to not process e.target.value, but just take the value.\n        onChange: PropTypes.valueEvent,\n        //Normal React.PropTypes\n        onText: React.PropTypes.string,\n        offText: React.PropTypes.string\n    };\n\n    static defaultProps = {\n        onText: \"ON\",\n        offText: \"OFF\"\n    };\n\n    //In case you have \"special\" value handling.\n    isChecked(value) {\n        return value === true || value === 1 || value === 'on';\n    }\n\n    //This is bound to the object instance\n    handleClick = (e)=> {\n        //This updates the valueManager\n        this.props.onChange(this.isChecked(this.props.value) ? '' : 'on');\n    };\n\n    render() {\n        var props = this.props;\n        var isChecked = this.isChecked(props.value);\n\n        //you prolly won't do it this way, but use classes instead, but the demo platform\n        // has its limitations.\n        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);\n        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);\n\n        return <div className={props.className} style={styles.fieldContainer}>\n            <div style={container} onClick={this.handleClick}>\n                <input name={props.name} type=\"hidden\" value={this.props.value}/>\n                {isChecked === true ? props.onText : props.offText}\n                <span style={button}/>\n            </div>\n        </div>\n    }\n\n}\n\n//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.\nvar styles = {\n    fieldContainer: {\n        display: 'block',\n        width: '100%',\n        height: '34px',\n        padding: '6px 12px',\n        fontSize: '14px',\n        lineHeight: '1.42857143',\n        color: '#555',\n        backgroundColor: '#fff'\n    },\n    container: {\n        position: 'relative',\n        borderRadius: \"11px\",\n        backgroundColor: '#fff',\n        border: 'inset 2px',\n        boxSizing: 'border-box',\n        display: 'inline-block',\n        cursor: 'pointer',\n        transition:'background .5s ease-in-out'\n    },\n    on: {\n        color: 'white',\n        backgroundColor: 'blue',\n        paddingLeft: '20px',\n        paddingRight: '6px',\n\n    },\n    off: {\n        paddingLeft: '6px',\n        paddingRight: '20px'\n    },\n    button: {\n        top: 2,\n        display: 'inline-block',\n        height: '16px',\n        width: '16px',\n        boxSizing: 'border-box',\n        borderRadius: '8px',\n        border: '5px inset rgba(204, 204, 204, .4)',\n        transform:'rotate(180deg)',\n        position: 'absolute',\n        transition: 'all .4s',\n\n    },\n    buttonOn: {\n        left: 1,\n        transform:'rotate(10deg)',\n    },\n    buttonOff: {\n        left: '100%',\n        marginLeft: '-18px',\n    }\n};\n"
+	module.exports = "const {loader, PropTypes, tutils} = Subschema;\nconst {extend} = tutils;\n\n//This adds it to the loader, loader.addType still works.\nclass SwitchButton extends React.Component {\n    //Prevents form-control from being passed to className.\n    static inputClassName = ' ';\n\n    static propTypes = {\n        //This tells subschema to not process e.target.value, but just take the value.\n        onChange: PropTypes.valueEvent,\n        //Normal React.PropTypes\n        onText: React.PropTypes.string,\n        offText: React.PropTypes.string\n    };\n\n    static defaultProps = {\n        onText: \"ON\",\n        offText: \"OFF\"\n    };\n\n    //In case you have \"special\" value handling.\n    isChecked(value) {\n        return value === true || value === 1 || value === 'on';\n    }\n\n    //This is bound to the object instance\n    handleClick = (e)=> {\n        //This updates the valueManager\n        this.props.onChange(this.isChecked(this.props.value) ? '' : 'on');\n    };\n\n    render() {\n        var props = this.props;\n        var isChecked = this.isChecked(props.value);\n\n        //you prolly won't do it this way, but use classes instead, but the demo platform\n        // has its limitations.\n        var container = extend({}, styles.container, isChecked ? styles.on : styles.off);\n        var button = extend({}, styles.button, isChecked ? styles.buttonOn : styles.buttonOff);\n\n        return <div className={props.className} style={styles.fieldContainer}>\n            <div style={container} onClick={this.handleClick}>\n                <input name={props.name} type=\"hidden\" value={this.props.value}/>\n                {isChecked === true ? props.onText : props.offText}\n                <span style={button}/>\n            </div>\n        </div>\n    }\n\n}\n\n//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.\nvar styles = {\n    fieldContainer: {\n        display: 'block',\n        width: '100%',\n        height: '34px',\n        padding: '6px 12px',\n        fontSize: '14px',\n        lineHeight: '1.42857143',\n        color: '#555',\n        backgroundColor: '#fff'\n    },\n    container: {\n        position: 'relative',\n        borderRadius: \"11px\",\n        backgroundColor: '#fff',\n        border: 'inset 2px',\n        boxSizing: 'border-box',\n        display: 'inline-block',\n        cursor: 'pointer',\n        transition:'background .5s ease-in-out'\n    },\n    on: {\n        color: 'white',\n        backgroundColor: 'blue',\n        paddingLeft: '20px',\n        paddingRight: '6px',\n\n    },\n    off: {\n        paddingLeft: '6px',\n        paddingRight: '20px'\n    },\n    button: {\n        top: 2,\n        display: 'inline-block',\n        height: '16px',\n        width: '16px',\n        boxSizing: 'border-box',\n        borderRadius: '8px',\n        border: '5px inset rgba(204, 204, 204, .4)',\n        transform:'rotate(180deg)',\n        position: 'absolute',\n        transition: 'all .4s',\n\n    },\n    buttonOn: {\n        left: 1,\n        transform:'rotate(10deg)',\n    },\n    buttonOff: {\n        left: '100%',\n        marginLeft: '-18px',\n    }\n};\nloader.addType('SwitchButton', SwitchButton);"
 
 /***/ },
 /* 35 */
 /***/ function(module, exports) {
 
-	module.exports = "const {PropTypes, decorators} = Subschema;\nconst {provide} = decorators;\nconst {type} = provide;\n\n@type\nclass Anchor extends React.Component {\n\n    static propTypes = {\n        //by making this propType an expression it will evaluate it dynamically.\n        href: PropTypes.expression,\n        label: PropTypes.expression\n    };\n\n    static defaultProps = {\n        href: '#/{.}'\n    };\n\n    render() {\n        return <a href={this.props.href}>{this.props.label}</a>\n    }\n}\n\n"
+	module.exports = "const {PropTypes, loader} = Subschema;\n\nclass Anchor extends React.Component {\n\n    static propTypes = {\n        //by making this propType an expression it will evaluate it dynamically.\n        href: PropTypes.expression,\n        label: PropTypes.expression\n    };\n\n    static defaultProps = {\n        href: '#/{.}'\n    };\n\n    render() {\n        return <a href={this.props.href}>{this.props.label}</a>\n    }\n}\nloader.addType({Anchor});\n"
 
 /***/ },
 /* 36 */
@@ -1828,13 +1829,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 37 */
 /***/ function(module, exports) {
 
-	module.exports = "var {PropTypes, decorators, types} = Subschema;\nvar {provide} = decorators;\nvar {type} = provide;\nvar {Select} = types;\n\n//copy propTypes (don't ref it will break Select)\nvar {options, ...copyPropTypes} = Select.propTypes;\ncopyPropTypes.options = PropTypes.listener;\n\n@type\nclass SelectListen extends React.Component {\n    static propTypes = copyPropTypes;\n\n    render() {\n        var value = this.props.value;\n        if (value == null && this.props.options) {\n            value = this.props.options[0].val;\n        }\n        return <Select {...this.props} value={value}/>\n    }\n}\n"
+	module.exports = "var {PropTypes, loader, types} = Subschema;\nvar {Select} = types;\n\n//copy propTypes (don't ref it will break Select)\nvar {options, ...copyPropTypes} = Select.propTypes;\ncopyPropTypes.options = PropTypes.listener;\n\nclass SelectListen extends React.Component {\n    static propTypes = copyPropTypes;\n\n    render() {\n        var value = this.props.value;\n        if (value == null && this.props.options) {\n            value = this.props.options[0].val;\n        }\n        return <Select {...this.props} value={value}/>\n    }\n}\n\nloader.addType('SelectListen', SelectListen);"
 
 /***/ },
 /* 38 */
 /***/ function(module, exports) {
 
-	module.exports = "const {types, decorators} = Subschema;\nconst {provide} = decorators;\nconst {type, template} = provide;\nconst {Select, Checkbox} = types;\n//Provide a template named SimpleTempalte\n\n@template\nclass SimpleTemplate extends React.Component {\n    render() {\n        var {name, title, help, errorClassName, message, fieldClass, children} = this.props;\n        return (<div\n            className={\"form-group field-name \" + (message != null ? errorClassName : '') + ' ' +  fieldClass}>\n            <div className=\"col-sm-offset-1 col-sm-10\">\n                {children}\n                <p className=\"help-block\" ref=\"help\">{message || help}</p>\n            </div>\n        </div>);\n    }\n}\n//Provide a type named CheckboxSelect\n@type\nclass CheckboxSelect extends React.Component {\n\n    //allows for injection of the Select types.\n    static propTypes = Select.propTypes;\n\n    constructor(...rest) {\n        super(...rest);\n        //init state\n        this.state = {disabled: false};\n    }\n\n    //inline styles, because this is an example\n    render() {\n        return <div>\n            <Checkbox className='' style={{position: 'absolute',  left:'-5px', top:'5px'}}\n                      onChange={(e)=>this.setState({disabled: !e})} checked={!this.state.disabled}/>\n            <Select {...this.props} disabled={this.state.disabled}/>\n        </div>\n    }\n}\n//Use a class as a schema, this news the class before adding it.\n@provide.schema\nclass Address {\n    schema = {\n        address: 'Text',\n        city: 'Text',\n        state: {\n            type: 'CheckboxSelect',\n            options: 'CA,FL,VA,IL'\n        },\n        zipCode: {\n            type: 'Text',\n            dataType: 'number'\n        }\n    };\n    fields = ['address', 'city', 'state', 'zipCode'];\n}\n//Adding a schema manually, this can also be done for types, templates,validators, etc...\nloader.addSchema({\n    Contact: {\n        schema: {\n            name: 'Text',\n            primary: {\n                type: 'Object',\n                subSchema: 'Address',\n                template: 'SimpleTemplate'\n            },\n            otherAddresses: {\n                canEdit: true,\n                canReorder: true,\n                canDelete: true,\n                canAdd: true,\n                type: 'List',\n                labelKey: 'address',\n                itemType: {\n                    type: 'Object',\n                    subSchema: 'Address'\n                }\n            }\n        },\n        fields: ['name', 'primary', 'otherAddresses']\n    }\n});\n"
+	module.exports = "const {types, loader, decorators} = Subschema;\nconst {Select, Checkbox} = types;\n//Provide a template named SimpleTempalte\n\nclass SimpleTemplate extends React.Component {\n    render() {\n        var {name, title, help, errorClassName, message, fieldClass, children} = this.props;\n        return (<div\n            className={\"form-group field-name \" + (message != null ? errorClassName : '') + ' ' +  fieldClass}>\n            <div className=\"col-sm-offset-1 col-sm-10\">\n                {children}\n                <p className=\"help-block\" ref=\"help\">{message || help}</p>\n            </div>\n        </div>);\n    }\n}\nloader.addType('SimpleTemplate', SimpleTemplate);\n//Provide a type named CheckboxSelect\n\nclass CheckboxSelect extends React.Component {\n\n    //allows for injection of the Select types.\n    static propTypes = Select.propTypes;\n\n    constructor(...rest) {\n        super(...rest);\n        //init state\n        this.state = {disabled: false};\n    }\n\n    //inline styles, because this is an example\n    render() {\n        return <div>\n            <Checkbox className='' style={{position: 'absolute',  left:'-5px', top:'5px'}}\n                      onChange={(e)=>this.setState({disabled: !e})} checked={!this.state.disabled}/>\n            <Select {...this.props} disabled={this.state.disabled}/>\n        </div>\n    }\n}\nloader.addType('CheckboxSelect', CheckboxSelect);\nclass Address {\n    schema = {\n        address: 'Text',\n        city: 'Text',\n        state: {\n            type: 'CheckboxSelect',\n            options: 'CA,FL,VA,IL'\n        },\n        zipCode: {\n            type: 'Text',\n            dataType: 'number'\n        }\n    };\n    fields = ['address', 'city', 'state', 'zipCode'];\n}\nloader.addSchema('Address', Address);\n//Adding a schema manually, this can also be done for types, templates,validators, etc...\nloader.addSchema({\n    Contact: {\n        schema: {\n            name: 'Text',\n            primary: {\n                type: 'Object',\n                subSchema: 'Address',\n                template: 'SimpleTemplate'\n            },\n            otherAddresses: {\n                canEdit: true,\n                canReorder: true,\n                canDelete: true,\n                canAdd: true,\n                type: 'List',\n                labelKey: 'address',\n                itemType: {\n                    type: 'Object',\n                    subSchema: 'Address'\n                }\n            }\n        },\n        fields: ['name', 'primary', 'otherAddresses']\n    }\n});\n"
 
 /***/ },
 /* 39 */
@@ -2020,7 +2021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _dec, _class, _class2, _temp2;
+	var _class, _temp2;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2029,15 +2030,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var _Subschema = Subschema;
-	var decorators = _Subschema.decorators;
+	var loader = _Subschema.loader;
 	var PropTypes = _Subschema.PropTypes;
 	var tutils = _Subschema.tutils;
-	var provide = decorators.provide;
 	var extend = tutils.extend;
 
 	//This adds it to the loader, loader.addType still works.
 
-	var SwitchButton = (_dec = provide.type, _dec(_class = (_temp2 = _class2 = function (_React$Component) {
+	var SwitchButton = (_temp2 = _class = function (_React$Component) {
 	    _inherits(SwitchButton, _React$Component);
 
 	    function SwitchButton() {
@@ -2096,16 +2096,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return SwitchButton;
-	}(React.Component), _class2.inputClassName = ' ', _class2.propTypes = {
+	}(React.Component), _class.inputClassName = ' ', _class.propTypes = {
 	    //This tells subschema to not process e.target.value, but just take the value.
 	    onChange: PropTypes.valueEvent,
 	    //Normal React.PropTypes
 	    onText: React.PropTypes.string,
 	    offText: React.PropTypes.string
-	}, _class2.defaultProps = {
+	}, _class.defaultProps = {
 	    onText: "ON",
 	    offText: "OFF"
-	}, _temp2)) || _class);
+	}, _temp2);
 
 	//Normally you would do this via CSS but the demo can't load css dynamically, so this a workaround.
 
@@ -2163,6 +2163,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        marginLeft: '-18px'
 	    }
 	};
+	loader.addType('SwitchButton', SwitchButton);
 	    }
 	    
 
@@ -2176,7 +2177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _class, _class2, _temp;
+	var _class, _temp;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2186,11 +2187,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Subschema = Subschema;
 	var PropTypes = _Subschema.PropTypes;
-	var decorators = _Subschema.decorators;
-	var provide = decorators.provide;
-	var type = provide.type;
-
-	var Anchor = type(_class = (_temp = _class2 = function (_React$Component) {
+	var loader = _Subschema.loader;
+	var Anchor = (_temp = _class = function (_React$Component) {
 	    _inherits(Anchor, _React$Component);
 
 	    function Anchor() {
@@ -2211,13 +2209,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return Anchor;
-	}(React.Component), _class2.propTypes = {
+	}(React.Component), _class.propTypes = {
 	    //by making this propType an expression it will evaluate it dynamically.
 	    href: PropTypes.expression,
 	    label: PropTypes.expression
-	}, _class2.defaultProps = {
+	}, _class.defaultProps = {
 	    href: '#/{.}'
-	}, _temp)) || _class;
+	}, _temp);
+
+	loader.addType({ Anchor: Anchor });
 	    }
 	    
 
@@ -2244,13 +2244,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	module.exports = function sampleloader(loader, schema, Subschema, React, valueManager){
 	    //---injected content here--
-	        "use strict";
+	        'use strict';
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _class, _class2, _temp;
+	var _class, _temp;
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2262,10 +2262,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Subschema = Subschema;
 	var PropTypes = _Subschema.PropTypes;
-	var decorators = _Subschema.decorators;
+	var loader = _Subschema.loader;
 	var types = _Subschema.types;
-	var provide = decorators.provide;
-	var type = provide.type;
 	var Select = types.Select;
 
 	//copy propTypes (don't ref it will break Select)
@@ -2273,11 +2271,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _Select$propTypes = Select.propTypes;
 	var options = _Select$propTypes.options;
 
-	var copyPropTypes = _objectWithoutProperties(_Select$propTypes, ["options"]);
+	var copyPropTypes = _objectWithoutProperties(_Select$propTypes, ['options']);
 
 	copyPropTypes.options = PropTypes.listener;
 
-	var SelectListen = type(_class = (_temp = _class2 = function (_React$Component) {
+	var SelectListen = (_temp = _class = function (_React$Component) {
 	    _inherits(SelectListen, _React$Component);
 
 	    function SelectListen() {
@@ -2287,7 +2285,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 
 	    _createClass(SelectListen, [{
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 	            var value = this.props.value;
 	            if (value == null && this.props.options) {
@@ -2298,7 +2296,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return SelectListen;
-	}(React.Component), _class2.propTypes = copyPropTypes, _temp)) || _class;
+	}(React.Component), _class.propTypes = copyPropTypes, _temp);
+
+
+	loader.addType('SelectListen', SelectListen);
 	    }
 	    
 
@@ -2312,9 +2313,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _class, _temp;
 
-	var _class, _class2, _class3, _temp, _dec, _class4;
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2324,15 +2325,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _Subschema = Subschema;
 	var types = _Subschema.types;
+	var loader = _Subschema.loader;
 	var decorators = _Subschema.decorators;
-	var provide = decorators.provide;
-	var type = provide.type;
-	var template = provide.template;
 	var Select = types.Select;
 	var Checkbox = types.Checkbox;
 	//Provide a template named SimpleTempalte
 
-	var SimpleTemplate = template(_class = function (_React$Component) {
+	var SimpleTemplate = function (_React$Component) {
 	    _inherits(SimpleTemplate, _React$Component);
 
 	    function SimpleTemplate() {
@@ -2372,11 +2371,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return SimpleTemplate;
-	}(React.Component)) || _class;
+	}(React.Component);
+
+	loader.addType('SimpleTemplate', SimpleTemplate);
 	//Provide a type named CheckboxSelect
 
-
-	var CheckboxSelect = type(_class2 = (_temp = _class3 = function (_React$Component2) {
+	var CheckboxSelect = (_temp = _class = function (_React$Component2) {
 	    _inherits(CheckboxSelect, _React$Component2);
 
 	    function CheckboxSelect() {
@@ -2420,11 +2420,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }]);
 
 	    return CheckboxSelect;
-	}(React.Component), _class3.propTypes = Select.propTypes, _temp)) || _class2;
-	//Use a class as a schema, this news the class before adding it.
+	}(React.Component), _class.propTypes = Select.propTypes, _temp);
 
+	loader.addType('CheckboxSelect', CheckboxSelect);
 
-	var Address = (_dec = provide.schema, _dec(_class4 = function Address() {
+	var Address = function Address() {
 	    _classCallCheck(this, Address);
 
 	    this.schema = {
@@ -2440,9 +2440,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    };
 	    this.fields = ['address', 'city', 'state', 'zipCode'];
-	}) || _class4);
-	//Adding a schema manually, this can also be done for types, templates,validators, etc...
+	};
 
+	loader.addSchema('Address', Address);
+	//Adding a schema manually, this can also be done for types, templates,validators, etc...
 	loader.addSchema({
 	    Contact: {
 	        schema: {

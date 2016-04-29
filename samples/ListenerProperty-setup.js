@@ -1,13 +1,10 @@
-var {PropTypes, decorators, types} = Subschema;
-var {provide} = decorators;
-var {type} = provide;
+var {PropTypes, loader, types} = Subschema;
 var {Select} = types;
 
 //copy propTypes (don't ref it will break Select)
 var {options, ...copyPropTypes} = Select.propTypes;
 copyPropTypes.options = PropTypes.listener;
 
-@type
 class SelectListen extends React.Component {
     static propTypes = copyPropTypes;
 
@@ -19,3 +16,5 @@ class SelectListen extends React.Component {
         return <Select {...this.props} value={value}/>
     }
 }
+
+loader.addType('SelectListen', SelectListen);

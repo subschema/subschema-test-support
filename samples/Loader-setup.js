@@ -1,10 +1,7 @@
-const {types, decorators} = Subschema;
-const {provide} = decorators;
-const {type, template} = provide;
+const {types, loader, decorators} = Subschema;
 const {Select, Checkbox} = types;
 //Provide a template named SimpleTempalte
 
-@template
 class SimpleTemplate extends React.Component {
     render() {
         var {name, title, help, errorClassName, message, fieldClass, children} = this.props;
@@ -17,8 +14,9 @@ class SimpleTemplate extends React.Component {
         </div>);
     }
 }
+loader.addType('SimpleTemplate', SimpleTemplate);
 //Provide a type named CheckboxSelect
-@type
+
 class CheckboxSelect extends React.Component {
 
     //allows for injection of the Select types.
@@ -39,8 +37,7 @@ class CheckboxSelect extends React.Component {
         </div>
     }
 }
-//Use a class as a schema, this news the class before adding it.
-@provide.schema
+loader.addType('CheckboxSelect', CheckboxSelect);
 class Address {
     schema = {
         address: 'Text',
@@ -56,6 +53,7 @@ class Address {
     };
     fields = ['address', 'city', 'state', 'zipCode'];
 }
+loader.addSchema('Address', Address);
 //Adding a schema manually, this can also be done for types, templates,validators, etc...
 loader.addSchema({
     Contact: {
