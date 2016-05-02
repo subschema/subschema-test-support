@@ -1,4 +1,4 @@
-const {loader, PropTypes} = Subschema;
+const {PropTypes} = Subschema;
 
 //This adds it to the loader, loader.addType still works.
 class SwitchButton extends React.Component {
@@ -69,7 +69,7 @@ var styles = {
         boxSizing: 'border-box',
         display: 'inline-block',
         cursor: 'pointer',
-        transition:'background .5s ease-in-out'
+        transition: 'background .5s ease-in-out'
     },
     on: {
         color: 'white',
@@ -90,14 +90,14 @@ var styles = {
         boxSizing: 'border-box',
         borderRadius: '8px',
         border: '5px inset rgba(204, 204, 204, .4)',
-        transform:'rotate(180deg)',
+        transform: 'rotate(180deg)',
         position: 'absolute',
         transition: 'all .4s',
 
     },
     buttonOn: {
         left: 1,
-        transform:'rotate(10deg)',
+        transform: 'rotate(10deg)',
     },
     buttonOff: {
         left: '100%',

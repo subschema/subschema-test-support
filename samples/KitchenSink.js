@@ -1,7 +1,11 @@
 module.exports = {
     description: "All the components with no options passed, just a place to make sure everything is here.   This may not be a good idea.",
     schema: {
-        schema: {}
+        schema: {},
+        fieldsets:[]
     },
-    setupFile: 'KitchenSink-setup.js'
+    setupFile: 'KitchenSink-setup.js',
+    props: {
+        "loader": true
+    }
 };

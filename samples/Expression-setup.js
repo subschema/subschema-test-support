@@ -1,4 +1,4 @@
-const {PropTypes, loader} = Subschema;
+const {PropTypes} = Subschema;
 
 class Anchor extends React.Component {
 
@@ -16,4 +16,5 @@ class Anchor extends React.Component {
         return <a href={this.props.href}>{this.props.label}</a>
     }
 }
+
 loader.addType({Anchor});

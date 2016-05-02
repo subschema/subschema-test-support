@@ -43,5 +43,4 @@ var fakeLoader = {
         return [{name: 'fakeAjax', processor: fakeAjax}]
     }
 };
-
 loader.addLoader(fakeLoader);

@@ -1,4 +1,4 @@
-const {types, loader, decorators} = Subschema;
+const {types} = Subschema;
 const {Select, Checkbox} = types;
 //Provide a template named SimpleTempalte
 
@@ -14,7 +14,7 @@ class SimpleTemplate extends React.Component {
         </div>);
     }
 }
-loader.addType('SimpleTemplate', SimpleTemplate);
+loader.addTemplate('SimpleTemplate', SimpleTemplate);
 //Provide a type named CheckboxSelect
 
 class CheckboxSelect extends React.Component {
@@ -53,7 +53,7 @@ class Address {
     };
     fields = ['address', 'city', 'state', 'zipCode'];
 }
-loader.addSchema('Address', Address);
+loader.addSchema('Address', new Address);
 //Adding a schema manually, this can also be done for types, templates,validators, etc...
 loader.addSchema({
     Contact: {
