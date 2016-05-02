@@ -3,7 +3,9 @@ module.exports = {
     It can be used to load Templates, Processors, Types, Schemas and Validators. Here we are demonstrating templates and schemas, but the same pattern applies to the other types\
     They all follow the same pattern.   Note the list`type` is optional, but useful for future introspection if needed\
     ',
-    schema: 'Contact',
+    schema: {
+        schema: 'Contact'
+    },
     data: {
         name: 'Robert Loblaw',
         primary: {
