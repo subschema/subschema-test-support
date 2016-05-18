@@ -147,14 +147,12 @@ function context(childContext = defChildContext, childContextTypes = {
     };
 
     class Context extends Component {
-        static childContextTypes = childContextTypes;
-
-        getChildContext = getChildContext;
-
         render() {
             return this.props.children;
         }
     }
+    Context.prototype.getChildContext = getChildContext;
+    Context.childContextTypes = childContextTypes
     return Context;
 }
 function intoWithContext(child, ctx, debug, contextTypes) {
