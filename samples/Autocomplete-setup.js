@@ -2,7 +2,7 @@
  * Register a fake loader.
  * @type {{fetch: Function, format: Function}}
  */
-var fakeAjax = {
+loader.addProcessor('fakeAjax', {
     fetch: function (url, value, component, cb) {
         //You can fire an ajax request here.
         var ti = setTimeout(function () {
@@ -31,16 +31,4 @@ var fakeAjax = {
     format: function (value) {
         return value && value.label;
     }
-};
-
-var fakeLoader = {
-    loadProcessor: function (name) {
-        if (name === 'fakeAjax') {
-            return fakeAjax
-        }
-    },
-    listProcessors: function () {
-        return [{name: 'fakeAjax', processor: fakeAjax}]
-    }
-};
-loader.addLoader(fakeLoader);
+});
