@@ -37,7 +37,7 @@
     "react-addons-test-utils": "^15.4.0",
     "react-dom": "^15.4.0",
     "subschema": "^1.5.0",
-    "subschema-test-support": "^1.3.5",
+    "subschema-test-support": "^1.6.0",
     "webpack": "^1.12.11"
   },
   "peerDependencies": {
