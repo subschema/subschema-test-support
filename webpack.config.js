@@ -5,7 +5,7 @@ var path = require('path'), join = path.join.bind(path, __dirname);
 module.exports = {
     output: {
         path: join('.', 'dist'),
-        filename: 'samples.js',
+        filename: '[name].js',
         libraryTarget: 'umd',
         library: 'SubschemaTestSamples'
 
@@ -16,6 +16,12 @@ module.exports = {
         },
         'subschema': {
             root: 'Subschema'
+        },
+        'react': {
+            root: 'React'
+        },
+        'react-dom': {
+            root: 'ReactDOM'
         }
     },
     entry: {
