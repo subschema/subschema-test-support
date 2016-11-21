@@ -4,7 +4,6 @@ module.exports = {
         schema: {},
         fieldsets:[]
     },
-    setupFile: 'KitchenSink-setup.js',
     props: {
         "loader": true
     }

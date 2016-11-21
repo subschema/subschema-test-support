@@ -1,3 +1,3 @@
-Subschema Test Support
+Subschema Test Samples
 ===
-Samples and a loader.  This is used by them demo and in testing subschema.
+This project has a list of samples to be generated for testing and demos.
