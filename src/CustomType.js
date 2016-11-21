@@ -16,6 +16,5 @@ module.exports = {
     },
     data: {
         areYouSure: true
-    },
-    setupFile: 'CustomType-setup.js'
-}
+    }
+};

@@ -32,6 +32,5 @@ module.exports = {
     props: {
         loader: true,
         schema: 'Contact'
-    },
-    setupFile: 'Loader-setup.js'
-}
+    }
+};

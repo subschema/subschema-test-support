@@ -24,6 +24,5 @@ module.exports = {
     },
     props: {
         "loader": true
-    },
-    setupFile: 'Autocomplete-setup.js'
+    }
 };

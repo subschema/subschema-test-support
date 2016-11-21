@@ -39,6 +39,5 @@ module.exports = {
                 val: 'casual'
             }
         ]
-    },
-    setupFile: 'ListenerProperty-setup.js'
-}
+    }
+};

@@ -23,6 +23,5 @@ module.exports = {
     },
     props: {
         "loader": true
-    },
-    setupFile: 'Expression-setup.js'
-}
+    }
+};
